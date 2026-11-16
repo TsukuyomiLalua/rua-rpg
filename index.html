@@ -42,7 +42,7 @@ main{max-width:760px;margin:auto;padding:18px 14px 50px}.hero{padding:26px 20px;
   <button class="secondary" id="restBtn">⛺ 休憩する</button>
   <button class="secondary" id="nextBtn" disabled>次のエリアへ →</button>
  </div>
- <p class="small" id="battleHint">敵HP・攻撃力は階層と敵種別から自動計算。戦闘中もポーションを使えます。</p>
+ <p class="small" id="battleHint">敵HP・攻撃力は階層と敵種別から自動計算。防御軽減は DEF ÷ (DEF + 敵ATK × 0.75)。</p>
 </section>
 
 <section class="panel">
@@ -68,7 +68,7 @@ main{max-width:760px;margin:auto;padding:18px 14px 50px}.hero{padding:26px 20px;
  <h2>所持品・装備</h2><div class="grid"><div class="stat"><small>ポーション</small><strong id="potions">3 個</strong></div><div class="stat"><small>武器</small><strong id="weapon">見習いの杖</strong></div></div>
  <div class="controls" style="margin-top:10px"><button class="secondary" id="potionBtn">♥ ポーションを使う（回復45・戦闘中使用可）</button></div>
 </section>
-<p class="footer">Ver.1.1：敵HP・攻撃力の自動成長、防御計算を実装。ゲームデータはこのブラウザ内に自動保存されます。</p>
+<p class="footer">Ver.1.11：防御計算を係数0.75の比率式に調整。敵レベル連動・HP/ATK成長率は仕様検討段階。ゲームデータはこのブラウザ内に自動保存されます。</p>
 </main>
 <script>
 (()=>{
@@ -115,7 +115,7 @@ function enemyBaseAtk(stage=s.stage){return Math.ceil(5*Math.pow(1.09,stage-1)+3
 function enemyAtk(stage=s.stage){return Math.ceil(enemyBaseAtk(stage)*enemyType(stage).atk)}
 function playerVit(){return 5+(s.statAlloc[1]||0)}
 function finalDefense(){const base=playerVit()+(s.armorDef||0)+(s.passiveDef||0);return Math.max(0,base*(s.defenseMultiplier||1))}
-function incomingDamage(){const atk=enemyAtk();const raw=Math.max(1,Math.ceil((atk*atk)/(atk+finalDefense())));return Math.max(1,Math.ceil(raw*(1-passive("guard")*.05)))}
+function incomingDamage(){const atk=enemyAtk();const def=finalDefense();const reduction=def/(def+atk*0.75);const raw=Math.max(1,Math.ceil(atk*(1-reduction)));return Math.max(1,Math.ceil(raw*(1-passive("guard")*.05)))}
 function enemyIsBoss(){return enemyType().sp>0}
 function enemyLabel(){return enemies[Math.min(s.stage-1,enemies.length-1)]}
 function save(){localStorage.setItem("ruaRpgSave",JSON.stringify(s))}
