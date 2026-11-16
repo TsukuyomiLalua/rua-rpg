@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#17152b">
+<title>星とルアの物語 — ミニRPG</title>
+<style>
+:root{color-scheme:dark;--bg:#111020;--panel:#201e36;--panel2:#292642;--line:#403b60;--text:#f5f1ff;--muted:#b8b1d2;--gold:#f1c879;--pink:#f29abf;--green:#78d6a1;--blue:#83baff;--red:#ff8585}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#29234a 0,#111020 55%);color:var(--text);font:15px/1.55 system-ui,-apple-system,"Hiragino Kaku Gothic ProN",Meiryo,sans-serif}
+main{max-width:760px;margin:auto;padding:18px 14px 50px}.hero{padding:26px 20px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(135deg,#38305b,#211e39);text-align:center}.eyebrow{color:var(--gold);letter-spacing:.16em;font-size:11px}.hero h1{margin:6px 0;font-size:clamp(25px,6vw,38px)}.hero p{color:var(--muted);margin:6px 0 0}.panel{background:rgba(32,30,54,.96);border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:14px}.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.muted{color:var(--muted);font-size:13px}.tag{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:3px 9px;font-size:11px;color:var(--gold)}h2{font-size:18px;margin:0 0 12px}h3{font-size:15px;margin:0}.bar{height:10px;background:#111020;border-radius:99px;overflow:hidden;margin:5px 0 10px}.fill{height:100%;border-radius:99px;transition:width .2s}.hp{background:linear-gradient(90deg,#42b978,#9be6a9)}.mp{background:linear-gradient(90deg,#397cdb,#8dc6ff)}.exp{background:linear-gradient(90deg,#bd8b37,#ffe09a)}.enemy{background:linear-gradient(90deg,#c54f65,#ff9b9b)}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.stat,.skill{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:11px}.stat strong{font-size:20px}.stat small{display:block;color:var(--muted)}button{border:1px solid #675d91;background:#514477;color:white;border-radius:11px;padding:10px 13px;font-weight:650;font-size:14px;cursor:pointer}button:hover{filter:brightness(1.12)}button:disabled{opacity:.38;cursor:not-allowed}.secondary{background:#302d49;border-color:var(--line)}.good{background:#285d4a;border-color:#438d70}.danger{background:#663746;border-color:#a55a70}.controls{display:flex;gap:8px;flex-wrap:wrap}.controls button{flex:1;min-width:120px}.log{white-space:pre-line;background:#151329;border:1px solid var(--line);border-radius:12px;padding:12px;min-height:72px;color:#e9e2ff;font-size:13px}.skill-list{display:grid;gap:8px}.stat-controls{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end}.stat-controls button{min-width:38px;flex:0 0 auto;padding:7px 11px}.stat-input{width:76px;min-width:0;background:#151329;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:8px;text-align:center;font:inherit}.stat-current{min-width:28px;text-align:center;font-weight:700}.skill .row{align-items:flex-start}.skill p{margin:4px 0;color:var(--muted);font-size:12px}.skill button{padding:7px 10px;font-size:12px}.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}.tabs button{padding:7px 10px;font-size:12px}.tabs .active{background:#76619f}.small{font-size:12px;color:var(--muted)}.notice{border-left:3px solid var(--gold);padding:8px 10px;background:#2a2540;border-radius:5px;color:#e9defe;font-size:13px}.skill-meta{color:var(--gold);font-size:12px;margin-top:5px}.footer{text-align:center;color:var(--muted);font-size:11px;margin:18px 0}.hidden{display:none!important}
+@media(min-width:600px){.grid.five{grid-template-columns:repeat(5,minmax(0,1fr))}.grid.stats{grid-template-columns:repeat(3,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<main>
+<header class="hero"><div class="eyebrow">FANTASY AUTO-BATTLE RPG</div><h1>星とルアの物語</h1><p>星降る森から始まる、ふたりの冒険。</p></header>
+<nav class="tabs" aria-label="メインメニュー" style="margin-top:12px">
+ <button id="adventureTab" class="active" type="button">冒険</button>
+ <button id="shopTab" class="secondary" type="button">ショップ</button>
+</nav>
+<div id="adventureView">
+
+
+<section class="panel">
+ <div class="row"><h2>ラルア</h2><span class="tag" id="levelTag">Lv.1</span></div>
+ <div class="row muted"><span>HP</span><b id="hpText">100 / 100</b></div><div class="bar"><div class="fill hp" id="hpBar"></div></div>
+ <div class="row muted"><span>MP</span><b id="mpText">50 / 50</b></div><div class="bar"><div class="fill mp" id="mpBar"></div></div>
+ <div class="row muted"><span>EXP</span><b id="expText">0 / 100</b></div><div class="bar"><div class="fill exp" id="expBar"></div></div>
+ <div class="grid stats" style="margin-top:12px">
+  <div class="stat"><small>ゴールド</small><strong id="gold">30 G</strong></div><div class="stat"><small>ステータスpt</small><strong id="statPoints">5 pt</strong></div><div class="stat"><small>スキルpt</small><strong id="skillPoints">5 SP</strong></div>
+ </div>
+</section>
+
+<section class="panel">
+ <div class="row"><h2>仲間</h2><span class="tag">メインヒロイン</span></div>
+ <div class="row"><div><h3>ルア</h3><p class="muted">「ラルアっ♡ ルアがずーっと一緒にいるからね！」</p><div class="muted">好感度 <b id="affection">10</b> / 100 ♥</div></div><div style="font-size:42px">✧</div></div>
+</section>
+
+<section class="panel">
+ <div class="row"><h2 id="areaTitle">第1エリア：星降る森</h2><span class="tag" id="battleTag">待機中</span></div>
+ <div class="row"><h3 id="enemyName">森のスライム</h3><b id="enemyHpText">30 / 30</b></div>
+ <div class="row muted"><span>敵ATK：<b id="enemyAtkText">5</b></span><span>こちらのDEF：<b id="defText">5</b></span></div>
+ <div class="bar"><div class="fill enemy" id="enemyBar"></div></div>
+ <div class="log" id="battleLog" aria-live="polite">森の入口に、小さな魔物が現れた！</div>
+ <div class="controls" style="margin-top:12px">
+  <button class="good" id="battleBtn">⚔ オート戦闘開始</button>
+  <button class="secondary" id="restBtn">⛺ 休憩する</button>
+  <button class="secondary" id="nextBtn" disabled>次のエリアへ →</button>
+  <button class="secondary" id="potionBtn">♥ ポーションを使う（最大HPの5%回復・戦闘中使用可）</button>
+ </div>
+ <div class="row" style="margin-top:10px"><div><b>連続オート戦闘</b><div class="small">敵を倒すと次のエリアへ進み、自動で戦闘を開始するよ。</div></div><button class="secondary" id="autoBattleToggle" type="button" aria-pressed="false">OFF</button></div>
+ <p class="small" id="battleHint">敵HP・攻撃力は階層と敵種別から自動計算。防御軽減は DEF ÷ (DEF + 敵ATK × 0.75)。</p>
+</section>
+
+<section class="panel">
+ <div class="row"><h2>ステータス振り分け</h2><span class="tag">いつでも無料で再配分</span></div>
+ <p class="muted">未使用ポイント：<b id="statRemain">5</b> pt</p>
+ <p class="small">各ステータスに追加したいポイント数を入力して、一括で割り振れます。＋／−で1ポイントずつ調整することもできます。</p>
+ <div id="statList" class="skill-list"></div>
+ <div class="controls" style="margin-top:10px"><button class="good" id="applyStats">入力したポイントを一括割り振り</button><button class="secondary" id="resetStats">振り分けをリセット</button></div>
+ <p class="small">レベルアップごとに5ポイント獲得。配分はいつでも無料で変更できます。</p>
+</section>
+
+<section class="panel">
+ <div class="row"><h2>パッシブスキル</h2><span class="tag">スキルツリー</span></div>
+ <p class="muted">未使用SP：<b id="spRemain">5</b> SP　／　習得済み：<b id="learnedCount">0</b></p>
+ <div class="tabs" id="skillTabs">
+  <button class="active" data-filter="すべて">すべて</button><button class="secondary" data-filter="攻撃">攻撃</button><button class="secondary" data-filter="魔法">魔法</button><button class="secondary" data-filter="防御">防御</button><button class="secondary" data-filter="技巧">技巧</button>
+ </div>
+ <div id="skillList" class="skill-list"></div>
+ <div class="controls" style="margin-top:10px"><button class="secondary" id="resetSkills">スキルを無料でリセット</button></div>
+ <p class="small">レベルアップごとに1 SP。中ボス+1 SP、エリアボス+2 SP、最終ボス+5 SP。習得した効果は戦闘計算に反映されます。</p>
+</section>
+<section class="panel"><div class="row"><h2>アクティブスキル</h2><span class="tag">SPで習得</span></div><p class="muted">未使用SP：<b id="activeSpRemain">5</b> SP。各スキル20 SP。</p><div id="activeSkillList" class="skill-list"></div></section>
+<section class="panel"><div class="row"><h2>転生・転生ツリー</h2><span class="tag">転生成長</span></div><div class="grid stats"><div class="stat"><small>転生回数</small><strong id="rebirthCount">0</strong></div><div class="stat"><small>転生ポイント</small><strong id="rebirthPoints">0</strong></div><div class="stat"><small>今回の獲得予定</small><strong id="rebirthPreview">1</strong></div></div><p class="small">転生ポイント = max(1, floor((転生実行時の現在階層 / 100)^0.8))。転生時はレベル・階層・ステータス配分・習得スキルをリセット。装備・ゴールド・所持品・転生ツリーは引き継ぐよ。</p><div class="controls"><button class="danger" id="rebirthBtn">現在階層で転生する</button></div><h3 style="margin:14px 0 8px">転生ツリー</h3><div id="rebirthTree" class="skill-list"></div></section>
+<section class="panel">
+ <div class="row"><h2>ゲーム設定</h2><span class="tag">セーブ管理</span></div>
+ <p class="muted">最初から遊び直したいときは、ここから全データを初期化できます。</p>
+ <div class="controls"><button class="danger" id="resetGameBtn">最初から始める（全データリセット）</button></div>
+ <p class="small">レベル・経験値・ゴールド・エリア進行・ステータス・スキル・所持品・好感度が初期状態に戻ります。この操作は取り消せません。</p>
+</section>
+
+<section class="panel">
+ <h2>所持品・装備</h2><div class="grid"><div class="stat"><small>ポーション</small><strong id="potions">3 個</strong></div><div class="stat"><small>武器</small><strong id="weapon">見習いの杖</strong></div></div>
+</section>
+
+</div>
+<div id="shopView" class="hidden">
+ <section class="panel">
+  <div class="row"><h2>星界商店</h2><span class="tag">5分ごとに更新</span></div>
+  <p class="muted">商品ごとに効果補正と価格補正が抽選されるよ。性能と価格を見比べて掘り出し物を探そう！</p>
+  <div class="row"><span class="small">次回更新まで</span><b id="shopCountdown">05:00</b></div>
+  <div id="shopItems" class="skill-list" style="margin-top:12px"></div>
+  <p class="small">在庫は各商品1個。購入すると次回更新まで売り切れになるよ。手動更新はなく、時間経過で自動更新されます。</p>
+ </section>
+ <section class="panel">
+  <div class="row"><h2>装備・所持品</h2><span class="tag">装備管理</span></div>
+  <div id="equippedGear" class="skill-list"></div>
+  <h3 style="margin:14px 0 8px">所持装備</h3>
+  <div id="ownedGear" class="skill-list"></div>
+  <p class="small">武器は通常攻撃・魔法攻撃の両方、防具はVIT・防具・パッシブを合計した防御力に割合補正。アクセサリー効果は各枠で複利重複します。</p>
+ </section>
+</div>
+
+<p class="footer">Ver.1.20：転生・転生ツリー、大ボス特殊能力、アクティブスキル、パッシブ上昇値表示を追加。ゲームデータはこのブラウザ内に自動保存されます。</p>
+</main>
+<script>
+(()=>{
+const $=id=>document.getElementById(id);
+const MAX_STAGE=4000;
+const areas=["星降る森","月影の小径","古代遺跡","深淵への道","星喰らいの祭壇"];
+const enemies=["森のスライム","迷い狼","ダークゴブリン","森の守護獣","星喰らい"];
+// 敵種別ごとの成長倍率：stage 1=通常、2=強敵、3=中ボス、4=エリアボス、5=最終ボス
+const enemyTypes=[
+ {name:"通常敵",hp:1,atk:1,sp:0},
+ {name:"強敵",hp:1.5,atk:1.2,sp:0},
+ {name:"中ボス",hp:2,atk:1.5,sp:1},
+ {name:"エリアボス",hp:3,atk:2,sp:2},
+ {name:"最終ボス",hp:3.5,atk:2.5,sp:5}
+];
+const statDefs=[["STR","攻撃力"],["VIT","最大HP・防御力"],["AGI","攻撃速度・回避"],["INT","魔法攻撃・最大MP"],["LUK","会心・ドロップ"]];
+const skillDefs=[
+{id:"power",name:"剛力",branch:"攻撃",cost:1,desc:"攻撃力 +5%",effect:"攻撃力+5%",requires:[]},
+{id:"critical",name:"急所狙い",branch:"攻撃",cost:2,desc:"クリティカル率 +3%",effect:"会心率+3%",requires:["power"]},
+{id:"magic",name:"魔力増幅",branch:"魔法",cost:2,desc:"魔法攻撃力 +8%",effect:"魔法攻撃+8%",requires:[]},
+{id:"vital",name:"生命強化",branch:"防御",cost:1,desc:"最大HP +10%",effect:"最大HP+10%",requires:[]},
+{id:"guard",name:"鉄壁",branch:"防御",cost:2,desc:"被ダメージを逓減式で軽減（80%に漸近）",effect:"被ダメージ軽減（80%に漸近）",requires:["vital"]},
+{id:"speed",name:"神速",branch:"技巧",cost:2,desc:"攻撃速度 +8%（1Lvごと）",effect:"攻撃速度+8%",requires:[]},
+{id:"fortune",name:"幸運体質",branch:"技巧",cost:2,desc:"レアドロップ率 +5%",effect:"ドロップ率+5%",requires:[]}
+];
+const fresh=()=>({schemaVersion:10,autoBattle:false,rebirthCount:0,rebirthPoints:0,rebirthTree:{magic:0,heal:0,efficiency:0,cooldown:0},activeSkills:{magic:false,heal:false},activeModes:{magic:"auto",heal:"auto"},healThreshold:50,mpReserve:0,bossTraits:{},ownedGear:[],equippedGear:{weapon:null,armor:null,accessories:[null,null]},shopStock:[],shopNextRefreshAt:0,spClaimedStages:[],level:1,exp:0,gold:30,hp:100,mp:50,stage:1,enemyHp:30,status:"ready",statAlloc:[0,0,0,0,0],statPoints:5,skillPoints:5,learned:[],skillLevels:{},potions:3,weapon:"見習いの杖",armorDef:0,passiveDef:0,defenseMultiplier:1,affection:10,log:"森の入口に、小さな魔物が現れた！",defeated:false});
+let s;
+try{s=JSON.parse(localStorage.getItem("ruaRpgSave"))||fresh()}catch{s=fresh()}
+// 旧セーブデータを新しい階層HP式へ移行。戦闘途中の状態は安全のため待機状態に戻す。
+s.stage=clamp(Number(s.stage)||1,1,MAX_STAGE);
+s.statAlloc=Array.isArray(s.statAlloc)?s.statAlloc:[0,0,0,0,0];
+s.learned=Array.isArray(s.learned)?s.learned:[];
+// Ver.1.16：既存の習得済みスキルをLv.1として引き継ぐ。
+s.skillLevels=(s.skillLevels&&typeof s.skillLevels==="object")?s.skillLevels:{};
+s.learned.forEach(id=>{if(!Number.isFinite(Number(s.skillLevels[id]))||Number(s.skillLevels[id])<1)s.skillLevels[id]=1;});
+s.skillLevels=Object.fromEntries(Object.entries(s.skillLevels).map(([id,lv])=>[id,Math.max(0,Math.floor(Number(lv)||0))]).filter(([id,lv])=>skillDefs.some(k=>k.id===id)&&lv>0));
+s.learned=Object.keys(s.skillLevels);
+s.armorDef=Number(s.armorDef)||0;s.passiveDef=Number(s.passiveDef)||0;
+s.defenseMultiplier=Number(s.defenseMultiplier)||1;
+if(s.status==="battle")s.status="ready";
+s.spClaimedStages=Array.isArray(s.spClaimedStages)?s.spClaimedStages:[];
+if((s.schemaVersion||0)<5){s.enemyHp=(s.status==="victory"&&s.defeated)?0:enemyMaxFor(s.stage);s.schemaVersion=5;}
+s.autoBattle=Boolean(s.autoBattle);
+s.ownedGear=Array.isArray(s.ownedGear)?s.ownedGear:[];
+s.equippedGear=(s.equippedGear&&typeof s.equippedGear==="object")?s.equippedGear:{weapon:null,armor:null,accessories:[null,null]};
+s.equippedGear.accessories=Array.isArray(s.equippedGear.accessories)?s.equippedGear.accessories.slice(0,2):[null,null];
+while(s.equippedGear.accessories.length<2)s.equippedGear.accessories.push(null);
+s.shopStock=Array.isArray(s.shopStock)?s.shopStock:[];
+s.shopNextRefreshAt=Number(s.shopNextRefreshAt)||0;
+s.rebirthCount=Math.max(0,Number(s.rebirthCount)||0);s.rebirthPoints=Math.max(0,Number(s.rebirthPoints)||0);
+s.rebirthTree=(s.rebirthTree&&typeof s.rebirthTree==="object")?s.rebirthTree:{magic:0,heal:0,efficiency:0,cooldown:0};["magic","heal","efficiency","cooldown"].forEach(k=>s.rebirthTree[k]=Math.max(0,Math.floor(Number(s.rebirthTree[k])||0)));
+s.activeSkills=(s.activeSkills&&typeof s.activeSkills==="object")?s.activeSkills:{magic:false,heal:false};s.activeModes=(s.activeModes&&typeof s.activeModes==="object")?s.activeModes:{magic:"auto",heal:"auto"};
+s.healThreshold=clamp(Number(s.healThreshold??50),10,90);s.mpReserve=Math.max(0,Number(s.mpReserve)||0);s.bossTraits=(s.bossTraits&&typeof s.bossTraits==="object")?s.bossTraits:{};
+s.schemaVersion=10;
+
+const gearCatalog=[
+ {key:"iron_sword",name:"鉄の剣",slot:"weapon",kind:"武器",basePrice:900,baseEffect:.08,stat:"attack",description:"通常攻撃・魔法攻撃を強化"},
+ {key:"star_staff",name:"星詠みの杖",slot:"weapon",kind:"武器",basePrice:1500,baseEffect:.12,stat:"attack",description:"通常攻撃・魔法攻撃を強化"},
+ {key:"leather_armor",name:"革の鎧",slot:"armor",kind:"防具",basePrice:800,baseEffect:.08,stat:"defense",description:"防御力を強化"},
+ {key:"star_armor",name:"星守の鎧",slot:"armor",kind:"防具",basePrice:1800,baseEffect:.14,stat:"defense",description:"防御力を強化"},
+ {key:"power_ring",name:"力の指輪",slot:"accessory",kind:"アクセサリー",basePrice:1200,baseEffect:.10,stat:"attack",description:"通常攻撃力を強化"},
+ {key:"sage_ring",name:"賢者の指輪",slot:"accessory",kind:"アクセサリー",basePrice:1400,baseEffect:.10,stat:"magic",description:"魔法攻撃力を強化"},
+ {key:"guardian_charm",name:"守護の護符",slot:"accessory",kind:"アクセサリー",basePrice:1300,baseEffect:.10,stat:"defense",description:"防御力を強化"},
+ {key:"life_pendant",name:"生命のペンダント",slot:"accessory",kind:"アクセサリー",basePrice:1300,baseEffect:.12,stat:"hp",description:"最大HPを強化"},
+ {key:"lucky_charm",name:"幸運のお守り",slot:"accessory",kind:"アクセサリー",basePrice:1600,baseEffect:.10,stat:"drop",description:"アイテムドロップ率を強化"}
+];
+function rollEffectMultiplier(){
+ const bands=[{min:70,max:89,weight:5},{min:90,max:109,weight:35},{min:110,max:129,weight:35},{min:130,max:149,weight:20},{min:150,max:150,weight:5}];
+ let n=Math.random()*100,chosen=bands[bands.length-1];
+ for(const b of bands){n-=b.weight;if(n<0){chosen=b;break;}}
+ return (chosen.min+Math.floor(Math.random()*(chosen.max-chosen.min+1)))/100;
+}
+function rollPriceMultiplier(){return 0.70+Math.random()*0.60;}
+function makeGear(def){
+ const effectRoll=rollEffectMultiplier();
+ const effect=def.baseEffect*effectRoll;
+ const priceMultiplier=rollPriceMultiplier();
+ const price=Math.max(10,Math.ceil(def.basePrice*effectRoll*priceMultiplier/10)*10);
+ return {uid:"gear_"+Date.now().toString(36)+"_"+Math.random().toString(36).slice(2,8),key:def.key,name:def.name,slot:def.slot,kind:def.kind,stat:def.stat,effect,effectRoll,price,description:def.description};
+}
+function generateShopStock(){
+ const pool=[...gearCatalog];
+ for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
+ s.shopStock=pool.slice(0,6).map(def=>({...makeGear(def),sold:false}));
+ s.shopNextRefreshAt=Date.now()+300000;
+}
+function ensureShop(){
+ if(!s.shopNextRefreshAt||!s.shopStock.length){generateShopStock();return;}
+ if(Date.now()>=s.shopNextRefreshAt)generateShopStock();
+}
+function formatPct(v){return (v*100).toFixed(2).replace(/\.?0+$/,"")+"%";}
+function gearEffectLabel(item){
+ const labels={attack:"攻撃力",magic:"魔法攻撃力",defense:"防御力",hp:"最大HP",drop:"ドロップ率"};
+ return `${labels[item.stat]||"効果"} +${formatPct(item.effect)}`;
+}
+function gearSlotLabel(slot){return slot==="weapon"?"武器":slot==="armor"?"胴防具":"アクセサリー";}
+function equippedItem(uid){return s.ownedGear.find(x=>x.uid===uid)||null;}
+function equippedItemsFor(slot){
+ if(slot==="accessory")return (s.equippedGear.accessories||[]).map(equippedItem).filter(Boolean);
+ const item=equippedItem(s.equippedGear[slot]);return item?[item]:[];
+}
+function gearMultiplier(stat){
+ return equippedItemsFor("armor").concat(equippedItemsFor("accessory"))
+  .filter(item=>item.stat===stat).reduce((mult,item)=>mult*(1+item.effect),1);
+}
+function weaponMultiplier(){return equippedItemsFor("weapon").reduce((mult,item)=>mult*(1+item.effect),1);}
+function equipGear(uid){
+ const item=s.ownedGear.find(x=>x.uid===uid);if(!item)return;
+ if(item.slot==="accessory"){
+  const slots=s.equippedGear.accessories;
+  let index=slots.findIndex(x=>!x);
+  if(index<0)index=0;
+  slots[index]=uid;
+ }else{s.equippedGear[item.slot]=uid;}
+ s.hp=clamp(s.hp,1,maxHp());s.log=`${item.name}を装備したよ！`;render();renderGear();
+}
+function unequipGear(slot,index=0){
+ if(slot==="accessory")s.equippedGear.accessories[index]=null;
+ else s.equippedGear[slot]=null;
+ s.hp=clamp(s.hp,1,maxHp());s.log="装備を外したよ！";render();renderGear();
+}
+function buyGear(uid){
+ const item=s.shopStock.find(x=>x.uid===uid);if(!item||item.sold||s.gold<item.price)return;
+ s.gold-=item.price;s.ownedGear.push({...item});item.sold=true;
+ s.log=`${item.name}を${item.price}Gで購入したよ！`;render();renderGear();renderShop();
+}
+function renderShop(){
+ const el=$("shopItems");if(!el)return;
+ el.innerHTML=s.shopStock.map(item=>`<div class="skill"><div class="row"><div><b>${item.name} <span class="tag">${item.kind}</span></b><p>${gearEffectLabel(item)} · 効果補正 ${item.effectRoll.toFixed(2)}倍</p><p>${item.description} · 価格補正 ${Math.round(item.price/(gearCatalog.find(x=>x.key===item.key).basePrice*item.effectRoll)*100)/100}倍</p><b style="color:var(--gold)">${item.price.toLocaleString()} G</b></div><button data-buy-gear="${item.uid}" ${item.sold||s.gold<item.price?"disabled":""}>${item.sold?"売り切れ":"購入"}</button></div></div>`).join("");
+}
+function renderGear(){
+ const equipped=$("equippedGear"),owned=$("ownedGear");if(!equipped||!owned)return;
+ const slots=[["weapon","武器",0],["armor","胴防具",0],["accessory","アクセサリー1",0],["accessory","アクセサリー2",1]];
+ equipped.innerHTML=slots.map(([slot,label,index])=>{
+  const uid=slot==="accessory"?s.equippedGear.accessories[index]:s.equippedGear[slot];
+  const item=equippedItem(uid);
+  return `<div class="skill"><div class="row"><div><b>${label}</b><p>${item?`${item.name} · ${gearEffectLabel(item)}`:"未装備"}</p></div>${item?`<button class="secondary" data-unequip="${slot}" data-unequip-index="${index}">外す</button>`:""}</div></div>`;
+ }).join("");
+ owned.innerHTML=s.ownedGear.length?s.ownedGear.map(item=>{
+  const equippedNow=s.equippedGear[item.slot]==item.uid||(item.slot==="accessory"&&s.equippedGear.accessories.includes(item.uid));
+  return `<div class="skill"><div class="row"><div><b>${item.name} ${equippedNow?'<span class="tag">装備中</span>':""}</b><p>${gearEffectLabel(item)} · 効果補正 ${item.effectRoll.toFixed(2)}倍</p></div><button data-equip-gear="${item.uid}" ${equippedNow?"disabled":""}>${equippedNow?"装備中":"装備"}</button></div></div>`;
+ }).join(""):'<p class="muted">まだ装備を持っていないよ。ショップで探してみよう！</p>';
+}
+function updateShopClock(){
+ if(!$("shopCountdown"))return;
+ const remain=Math.max(0,s.shopNextRefreshAt-Date.now());
+ const mm=String(Math.floor(remain/60000)).padStart(2,"0"),ss=String(Math.floor((remain%60000)/1000)).padStart(2,"0");
+ $("shopCountdown").textContent=`${mm}:${ss}`;
+ if(remain<=0){generateShopStock();renderShop();save();}
+}
+function maxHp(){return Math.floor((100+(s.level-1)*15+s.statAlloc[1]*12)*(1+passive("vital")*.10)*gearMultiplier("hp"))}
+function maxMp(){return 50+(s.level-1)*5+s.statAlloc[3]*5}
+function skillLevel(id){return Math.max(0,Number(s.skillLevels?.[id])||0)}
+function passive(id){return skillLevel(id)}
+const activeDefs=[{id:"magic",name:"星雷の魔弾",type:"魔法攻撃",ct:2,mp:10},{id:"heal",name:"星癒の祈り",type:"回復",ct:4,mp:20}];
+const bossTraitDefs=[{id:"regen",name:"再生",unlock:50},{id:"ironwall",name:"鉄壁",unlock:50},{id:"accelerate",name:"加速",unlock:50},{id:"barrier",name:"魔力障壁",unlock:50},{id:"unyielding",name:"不屈",unlock:50},{id:"absorb",name:"吸収",unlock:150},{id:"counter",name:"反撃",unlock:150},{id:"starbreak",name:"星砕き",unlock:150}];
+function rebirthGain(stage=s.stage){return Math.max(1,Math.floor(Math.pow(Math.max(1,stage)/100,.8)))}
+function treeLevel(id){return Math.max(0,Number(s.rebirthTree?.[id])||0)}
+function activeOwned(id){return Boolean(s.activeSkills?.[id])}
+function activeMpCost(id){return Math.max(1,Math.ceil((id==="magic"?10:20)*Math.pow(.95,treeLevel("efficiency"))))}
+function activeCooldown(id){return Math.max(.5,(id==="magic"?2:4)*Math.pow(.95,treeLevel("cooldown")))}
+function activePower(id){return id==="magic"?200+treeLevel("magic")*10:10+treeLevel("heal")}
+function isMajorBoss(stage=s.stage){return stage>=50&&stage%50===0}
+function bossTraitFor(stage=s.stage){return s.bossTraits[String(stage)]||{}}
+function traitLevel(id,stage=s.stage){return Number(bossTraitFor(stage)[id])||0}
+function bossTraitSummary(stage=s.stage){return Object.entries(bossTraitFor(stage)).filter(([,lv])=>lv>0).map(([id,lv])=>(bossTraitDefs.find(x=>x.id===id)?.name||id)+" Lv."+lv).join("・")}
+function ensureBossTraits(stage=s.stage){if(!isMajorBoss(stage))return;const key=String(stage);if(s.bossTraits[key])return;const pool=bossTraitDefs.filter(x=>x.unlock<=stage),count=Math.floor(stage/50),traits={};for(let i=0;i<count;i++){const t=pool[Math.floor(Math.random()*pool.length)];traits[t.id]=(traits[t.id]||0)+1;}s.bossTraits[key]=traits;}
+
+// 現在コストを基準に、そのコストで同じ回数購入すると次のコストへ上昇。
+function skillCostInfo(k){let cost=k.cost,progress=0;for(let i=0;i<skillLevel(k.id);i++){progress++;if(progress>=cost){cost++;progress=0;}}return {cost,progress};}
+function skillTotalSpent(k){let cost=k.cost,progress=0,total=0;for(let i=0;i<skillLevel(k.id);i++){total+=cost;progress++;if(progress>=cost){cost++;progress=0;}}return total;}
+function stageIndex(stage=s.stage){return (stage-1)%5}
+function enemyType(stage=s.stage){return enemyTypes[stageIndex(stage)]}
+function enemyBaseHp(stage=s.stage){return Math.ceil(30*Math.pow(1.18,stage-1)+5*(stage-1))}
+function enemyMaxFor(stage=s.stage){return Math.ceil(enemyBaseHp(stage)*enemyType(stage).hp)}
+function enemyMax(){return enemyMaxFor(s.stage)}
+function enemyBaseAtk(stage=s.stage){return Math.ceil(5*Math.pow(1.09,stage-1)+3*(stage-1))}
+function enemyAtk(stage=s.stage){return Math.ceil(enemyBaseAtk(stage)*enemyType(stage).atk)}
+function playerVit(){return 5+(s.statAlloc[1]||0)}
+function finalDefense(){const base=playerVit()+(s.armorDef||0)+(s.passiveDef||0);return Math.max(0,base*(s.defenseMultiplier||1)*gearMultiplier("defense"))}
+function guardReduction(){return 0.8*(1-Math.pow(0.9375,passive("guard")))}
+function incomingDamage(){let atk=enemyAtk();if(traitLevel("unyielding")>0&&s.enemyHp<=enemyMax()*.3)atk=Math.ceil(atk*(1+.1*traitLevel("unyielding")));const def=finalDefense();const reduction=def/(def+atk*0.75);const raw=Math.max(1,Math.ceil(atk*(1-reduction)));return Math.max(1,Math.ceil(raw*(1-guardReduction())))}
+function attackSpeedMultiplier(){return 1+(s.statAlloc[2]||0)*0.01+passive("speed")*0.08}
+function battleInterval(){return Math.max(200,Math.round(700/attackSpeedMultiplier()))}
+function potionHealAmount(){return Math.max(1,Math.ceil(maxHp()*0.05))}
+function enemyIsBoss(){return enemyType().sp>0}
+function areaLabel(stage=s.stage){return stage<=areas.length?areas[stage-1]:`星界第${stage}層`}
+function enemyLabel(){return enemies[stageIndex()]}
+function save(){localStorage.setItem("ruaRpgSave",JSON.stringify(s))}
+function clamp(v,min,max){return Math.max(min,Math.min(max,v))}
+// 旧バージョンで敗北状態のまま保存されたデータも、新しい復帰ルールへ移行する。
+if(s.status==="defeat"){const lostStage=s.stage;s.stage=Math.max(1,s.stage-1);s.enemyHp=enemyMaxFor(s.stage);s.defeated=false;s.status="ready";s.hp=maxHp();s.mp=maxMp();s.log=lostStage===1?"敗北状態から復帰！最初の敵に再挑戦できるよ。":"敗北状態から復帰！直前に倒した敵に戻ったよ。";}
+function render(){
+ $("levelTag").textContent="Lv."+s.level;
+ $("hpText").textContent=s.hp+" / "+maxHp();$("mpText").textContent=s.mp+" / "+maxMp();
+ $("expText").textContent=s.exp+" / 100";$("gold").textContent=s.gold+" G";
+ $("statPoints").textContent=s.statPoints+" pt";$("skillPoints").textContent=s.skillPoints+" SP";
+ $("hpBar").style.width=(s.hp/maxHp()*100)+"%";$("mpBar").style.width=(s.mp/maxMp()*100)+"%";$("expBar").style.width=s.exp+"%";
+ $("affection").textContent=s.affection;$("potions").textContent=s.potions+" 個";$("weapon").textContent=(equippedItem(s.equippedGear?.weapon)?.name||s.weapon);
+ $("areaTitle").textContent="第"+s.stage+"エリア："+areaLabel();
+ $("enemyName").textContent=enemyLabel()+(enemyIsBoss()?"【BOSS】":"")+(isMajorBoss()?"【大ボス："+(bossTraitSummary()||"能力抽選待ち")+"】":"");
+ const em=enemyMax();$("enemyHpText").textContent=s.enemyHp+" / "+em;$("enemyBar").style.width=(s.enemyHp/em*100)+"%";
+ $("enemyAtkText").textContent=enemyAtk();$("defText").textContent=Math.floor(finalDefense());
+ $("battleTag").textContent=({ready:"待機中",battle:"戦闘中",victory:"勝利！",defeat:"敗北"})[s.status];
+ $("battleLog").textContent=s.log;
+ $("battleBtn").disabled=s.status!=="ready"||s.defeated||s.hp<=0;
+ $("autoBattleToggle").textContent=s.autoBattle?"ON":"OFF";$("autoBattleToggle").classList.toggle("good",s.autoBattle);$("autoBattleToggle").classList.toggle("secondary",!s.autoBattle);$("autoBattleToggle").setAttribute("aria-pressed",String(s.autoBattle));
+ $("restBtn").disabled=s.status==="battle";
+ $("nextBtn").disabled=s.status!=="victory"||s.stage>=MAX_STAGE;
+ $("potionBtn").disabled=s.potions<=0||s.hp>=maxHp()||s.status==="defeat";$("potionBtn").textContent=`♥ ポーションを使う（${potionHealAmount()}回復・最大HPの5%）`;
+ $("battleHint").textContent=s.status==="victory"?"勝利！次のエリアへ進もう。":s.status==="defeat"?"直前に倒した敵へ戻ったよ。全回復して再挑戦できるよ。":`AGI・神速で攻撃間隔が短縮（現在${battleInterval()}ms）。戦闘中もポーションを使えるよ。`;
+ $("statRemain").textContent=s.statPoints;
+ $("statList").innerHTML=statDefs.map(([name,desc],i)=>`<div class="skill"><div class="row"><div><b>${name}</b><p>${desc}</p><span class="small">現在：<b>${s.statAlloc[i]}</b></span></div><div class="stat-controls"><button class="secondary" data-stat-minus="${i}" ${s.statAlloc[i]===0?"disabled":""}>−</button><span class="stat-current">${s.statAlloc[i]}</span><button data-stat-plus="${i}" ${s.statPoints===0?"disabled":""}>＋</button><input class="stat-input" type="number" inputmode="numeric" min="0" max="${s.statPoints}" step="1" value="0" data-stat-input="${i}" aria-label="${name}に追加するポイント" /></div></div></div>`).join("");
+ $("spRemain").textContent=s.skillPoints;$("learnedCount").textContent=s.learned.length;
+ const filter=document.querySelector("#skillTabs .active")?.dataset.filter||"すべて";
+ $("skillList").innerHTML=skillDefs.filter(k=>filter==="すべて"||k.branch===filter).map(k=>{
+ const lv=skillLevel(k.id),costInfo=skillCostInfo(k),blocked=k.requires.some(r=>skillLevel(r)<1);
+ const totalEffect=({power:`攻撃力 +${lv*5}%`,critical:`会心率 +${lv*3}%`,magic:`魔法攻撃力 +${lv*8}%`,vital:`最大HP +${lv*10}%`,guard:`被ダメージ軽減 ${formatPct(.8*(1-Math.pow(.9375,lv)))}`,speed:`攻撃速度 +${lv*8}%`,fortune:`ドロップ率 +${lv*5}%`})[k.id]||k.desc;
+ return `<div class="skill"><div class="row"><div><b>${k.name} <span class="tag">${k.branch}</span></b><p>${k.desc}（1Lvごと）</p><p class="skill-meta">現在の効果：${totalEffect}</p><p>現在Lv. ${lv} · 次回 ${costInfo.cost} SP · このコストで ${costInfo.progress}/${costInfo.cost} 回購入済み</p>${k.requires.length?`<p>前提：${k.requires.map(r=>skillDefs.find(x=>x.id===r).name).join("・")}</p>`:""}</div><button data-learn="${k.id}" ${s.skillPoints<costInfo.cost||blocked?"disabled":""}>${lv>0?"強化":"習得"}（${costInfo.cost} SP）</button></div></div>`;
+ }).join("");
+ $("activeSpRemain").textContent=s.skillPoints;
+ $("activeSkillList").innerHTML=activeDefs.map(k=>{const owned=activeOwned(k.id),mode=s.activeModes[k.id]||"auto";let extra="";if(owned){extra='<p>発動方式：'+(mode==="auto"?"自動":"手動")+'</p>';extra+=k.id==="heal"?'<label class="small">自動回復条件（HP%以下） <input type="number" min="10" max="90" step="5" value="'+s.healThreshold+'" data-heal-threshold></label>':'<label class="small">MP温存量 <input type="number" min="0" max="'+maxMp()+'" step="1" value="'+s.mpReserve+'" data-mp-reserve></label>';}
+ return '<div class="skill"><div class="row"><div><b>'+k.name+' <span class="tag">'+k.type+'</span></b><p>'+(k.id==="magic"?'魔法攻撃ダメージの'+activePower(k.id)+'%':'最大HPの'+activePower(k.id)+'%を回復')+'</p><p class="skill-meta">CT '+activeCooldown(k.id).toFixed(2)+'秒 · MP '+activeMpCost(k.id)+' · 習得20 SP</p>'+(extra||'<p>未習得</p>')+'</div><div>'+(owned?'<button class="secondary" data-active-mode="'+k.id+'">'+(mode==="auto"?"自動":"手動")+'切替</button>':'<button data-active-learn="'+k.id+'" '+(s.skillPoints<20?'disabled':'')+'>習得（20 SP）</button>')+(owned&&mode==="manual"?'<button data-active-cast="'+k.id+'" '+(s.status!=="battle"||Date.now()<activeCooldowns[k.id]||s.mp<activeMpCost(k.id)?'disabled':'')+'>使用</button>':'')+'</div></div></div>';}).join("");
+ $("rebirthCount").textContent=s.rebirthCount;$("rebirthPoints").textContent=s.rebirthPoints;$("rebirthPreview").textContent=rebirthGain();$("rebirthBtn").disabled=s.status==="battle";
+ const td=[['magic','魔法威力','星雷の魔弾 +10%/Lv'],['heal','回復強化','星癒の祈り +1%/Lv'],['efficiency','MP効率','MP消費 -5%/Lv'],['cooldown','神速詠唱','クールタイム -5%/Lv']];
+ $("rebirthTree").innerHTML=td.map(([id,name,desc])=>'<div class="skill"><div class="row"><div><b>'+name+'</b><p>'+desc+'</p><p class="skill-meta">現在Lv. '+treeLevel(id)+'</p></div><button data-tree-buy="'+id+'" '+(s.rebirthPoints<1?'disabled':'')+'>強化（1 TP）</button></div></div>').join("");
+ renderShop();renderGear();
+ save();
+}
+function addExp(amount){
+ s.exp+=amount;
+ while(s.exp>=100){s.exp-=100;s.level++;s.statPoints+=5;s.skillPoints+=1;s.hp=maxHp();s.mp=maxMp();s.log+="\nレベルアップ！ Lv."+s.level+"！ ステータスpt +5、SP +1！";}
+}
+let playerBattleTimer=null;
+let enemyBattleTimer=null;
+let autoBattleTimer=null;
+let battleRound=0;
+let activeCooldowns={magic:0,heal:0};
+function stopBattle(){
+ if(playerBattleTimer!==null){clearInterval(playerBattleTimer);playerBattleTimer=null;}
+ if(enemyBattleTimer!==null){clearInterval(enemyBattleTimer);enemyBattleTimer=null;}
+}
+function scheduleAutoBattle(){
+ if(autoBattleTimer!==null){clearTimeout(autoBattleTimer);autoBattleTimer=null;}
+ if(!s.autoBattle||s.status!=="victory"||s.stage>=MAX_STAGE)return;
+ autoBattleTimer=setTimeout(()=>{autoBattleTimer=null;if(!s.autoBattle||s.status!=="victory"||s.stage>=MAX_STAGE)return;nextArea();battle();},700);
+}
+function finishBattleVictory(lines,luk){
+ stopBattle();s.status="victory";s.defeated=true;
+ const xp=35+s.stage*10,g=20+s.stage*5;
+ addExp(xp);s.gold+=g;s.affection=clamp(s.affection+5,0,100);
+ const bonus=enemyType().sp;if(bonus>0&&!s.spClaimedStages.includes(s.stage)){s.skillPoints+=bonus;s.spClaimedStages.push(s.stage);lines.push(`${enemyType().name}初回撃破ボーナス！ SP +${bonus}！`);}
+ if(Math.random()<Math.min(.95,(.25+luk*.03+passive("fortune")*.05)*gearMultiplier("drop"))){s.potions++;lines.push("ドロップ：ポーション +1");}
+ lines.push(`勝利！ EXP +${xp} / ゴールド +${g}`);s.log=lines.slice(-8).join("\n");render();scheduleAutoBattle();
+}
+function finishBattleDefeat(lines){
+ stopBattle();
+ const lostStage=s.stage;
+ s.stage=Math.max(1,s.stage-1);
+ s.enemyHp=enemyMaxFor(s.stage);
+ s.defeated=false;
+ s.status="ready";
+ s.hp=maxHp();s.mp=maxMp();
+ lines.push(lostStage===1?"力尽きたけれど、最初の敵から再挑戦！ HP・MPが全回復したよ。":`力尽きてしまった……。第${s.stage}エリアの敵に戻って再挑戦！ HP・MPは全回復したよ。`);
+ s.log=lines.slice(-8).join("\n");render();
+}
+function playerAttackTurn(){
+ if(s.status!=="battle"){stopBattle();return;}
+ battleRound++;
+ const str=s.statAlloc[0],int=s.statAlloc[3],luk=s.statAlloc[4];
+ let lines=s.log?s.log.split("\n"):[];const now=Date.now();
+ if(activeOwned("heal")&&(s.activeModes.heal||"auto")==="auto"&&s.hp<=maxHp()*s.healThreshold/100&&now>=activeCooldowns.heal&&s.mp>=activeMpCost("heal")){const before=s.hp;s.mp-=activeMpCost("heal");s.hp=Math.min(maxHp(),s.hp+Math.ceil(maxHp()*activePower("heal")/100));activeCooldowns.heal=now+activeCooldown("heal")*1000;lines.push(`星癒の祈り：HP +${s.hp-before}`);}
+ if(activeOwned("magic")&&(s.activeModes.magic||"auto")==="auto"&&now>=activeCooldowns.magic&&s.mp>=activeMpCost("magic")+s.mpReserve){s.mp-=activeMpCost("magic");let md=Math.max(1,Math.floor(int*2*(1+passive("magic")*.08)*weaponMultiplier()*gearMultiplier("magic")*activePower("magic")/100));md=Math.max(1,Math.floor(md*(1-.05*traitLevel("ironwall"))*(1-.1*traitLevel("barrier"))));s.enemyHp=Math.max(0,s.enemyHp-md);activeCooldowns.magic=now+activeCooldown("magic")*1000;lines.push(`星雷の魔弾：${md} ダメージ`);if(traitLevel("absorb")>0){const bh=Math.ceil(md*.02*traitLevel("absorb"));s.enemyHp=Math.min(enemyMax(),s.enemyHp+bh);lines.push(`大ボスの吸収：HP +${bh}`);}if(traitLevel("counter")>0){const rd=Math.max(1,Math.ceil(md*.2*traitLevel("counter")));s.hp=Math.max(0,s.hp-rd);lines.push(`大ボスの反撃：${rd} ダメージ`);if(s.hp<=0){finishBattleDefeat(lines);return;}}if(s.enemyHp<=0){finishBattleVictory(lines,luk);return;}}
+
+ const attack=Math.floor((18+(s.level+1)*2+str*4+(s.weapon==="星詠みの杖"?8:0))*gearMultiplier("attack")*weaponMultiplier()*(1+passive("power")*.05));
+ const critChance=Math.min(.5,.05+luk*.01+passive("critical")*.03);
+ const crit=Math.random()<critChance;const magicAttack=Math.floor(int*2*(1+passive("magic")*.08)*weaponMultiplier()*gearMultiplier("magic"));const dmg=attack+magicAttack+(crit?Math.floor(attack*.5):0);
+ const finalDmg=Math.max(1,Math.floor(dmg*(1-.05*traitLevel("ironwall"))*(1-.1*traitLevel("barrier"))));s.enemyHp=Math.max(0,s.enemyHp-finalDmg);lines.push(`${battleRound}T：${crit?"会心！ ":""}ラルアの攻撃 ${finalDmg} ダメージ`);if(traitLevel("absorb")>0){const bossHeal=Math.ceil(finalDmg*.02*traitLevel("absorb"));s.enemyHp=Math.min(enemyMax(),s.enemyHp+bossHeal);lines.push(`大ボスの吸収：HP +${bossHeal}`);}if(traitLevel("counter")>0){const reflected=Math.max(1,Math.ceil(finalDmg*.2*traitLevel("counter")));s.hp=Math.max(0,s.hp-reflected);lines.push(`大ボスの反撃：${reflected} ダメージ`);if(s.hp<=0){finishBattleDefeat(lines);return;}}
+ if(s.enemyHp<=0){finishBattleVictory(lines,luk);return;}
+ s.log=lines.slice(-8).join("\n");render();
+}
+function enemyAttackTurn(){
+ if(s.status!=="battle"){stopBattle();return;}
+ if(s.enemyHp<=0)return;
+ let lines=s.log?s.log.split("\n"):[];
+ const agi=s.statAlloc[2];const regen=Math.ceil(enemyMax()*.02*traitLevel("regen"));if(regen>0){s.enemyHp=Math.min(enemyMax(),s.enemyHp+regen);lines.push(`大ボスの再生：HP +${regen}`);}
+ if(Math.random()<Math.min(.3,agi*.01+passive("speed")*.08)){lines.push("回避成功！");}
+ else{let incoming=incomingDamage();if(traitLevel("starbreak")>0&&battleRound>0&&battleRound%5===0){incoming=Math.ceil(incoming*(1+1.5*traitLevel("starbreak")));lines.push("星砕き発動！");}s.hp=Math.max(0,s.hp-incoming);lines.push(`${enemyLabel()}の攻撃 ${incoming} ダメージ`);}
+ s.log=lines.slice(-8).join("\n");
+ if(s.hp<=0){finishBattleDefeat(lines);return;}
+ render();
+}
+function battle(){
+ if(s.status!=="ready"||s.defeated||s.enemyHp<=0||s.hp<=0)return;
+ s.status="battle";battleRound=0;activeCooldowns={magic:0,heal:0};ensureBossTraits();const traitText=isMajorBoss()?"\n大ボス特殊能力："+bossTraitSummary():"";s.log=`戦闘開始！ 攻撃間隔${battleInterval()}ms。敵の反撃間隔は700ms。${traitText}`;render();
+ playerBattleTimer=setInterval(playerAttackTurn,battleInterval());
+ const enemyInterval=isMajorBoss()?Math.max(300,700-traitLevel("accelerate")*50):700;enemyBattleTimer=setInterval(enemyAttackTurn,enemyInterval);
+}
+function rest(){
+ if(s.status==="battle")return;
+ if(autoBattleTimer!==null){clearTimeout(autoBattleTimer);autoBattleTimer=null;}
+ s.hp=maxHp();s.mp=maxMp();
+ if(s.status==="defeat"){s.status="ready";s.enemyHp=enemyMax();s.defeated=false;s.log="キャンプで全回復！ 同じ敵に再挑戦できるよ。";}
+ else if(s.status==="victory"){s.log="ゆっくり休憩したよ！ 敵は復活しないので、次のエリアへ進もう。";}
+ else{s.log="HPとMPが全回復したよ！";}
+ render();
+}
+function nextArea(){
+ if(s.status!=="victory"||s.stage>=MAX_STAGE)return;
+ if(autoBattleTimer!==null){clearTimeout(autoBattleTimer);autoBattleTimer=null;}
+ s.stage++;s.enemyHp=enemyMax();s.defeated=false;s.status="ready";ensureBossTraits();
+ s.hp=clamp(s.hp+30,1,maxHp());s.mp=clamp(s.mp+15,0,maxMp());
+ s.log=`${areaLabel()}に到着！ ${enemyLabel()}が現れた！`;render();
+}
+function usePotion(){if(s.potions<=0||s.hp>=maxHp()||s.status==="defeat")return;s.potions--;const before=s.hp;s.hp=clamp(s.hp+potionHealAmount(),0,maxHp());const healed=s.hp-before;s.log=(s.status==="battle"?"戦闘中に":"")+`ポーションを使った！ HPが${healed}回復したよ。敵の行動は進まないよ。`;render()}
+function resetStats(){s.statPoints+=s.statAlloc.reduce((a,b)=>a+b,0);s.statAlloc=[0,0,0,0,0];s.hp=clamp(s.hp,1,maxHp());s.mp=clamp(s.mp,0,maxMp());s.log="ステータスを無料で振り直したよ！";render()}
+function resetSkills(){s.skillPoints+=skillDefs.reduce((a,k)=>a+skillTotalSpent(k),0)+(activeOwned("magic")?20:0)+(activeOwned("heal")?20:0);s.learned=[];s.skillLevels={};s.activeSkills={magic:false,heal:false};s.activeModes={magic:"auto",heal:"auto"};activeCooldowns={magic:0,heal:0};s.hp=clamp(s.hp,1,maxHp());s.log="パッシブ・アクティブスキルを無料で振り直したよ！ 使用したSPもすべて戻ったよ。";render()}
+function castActive(id){if(!activeOwned(id)||s.status!=="battle"||Date.now()<activeCooldowns[id])return;const cost=activeMpCost(id);if(s.mp<cost)return;let lines=s.log?s.log.split("\n"):[];s.mp-=cost;if(id==="heal"){const before=s.hp;s.hp=Math.min(maxHp(),s.hp+Math.ceil(maxHp()*activePower(id)/100));lines.push(`星癒の祈り：HP +${s.hp-before}`);}else{const int=s.statAlloc[3];let dmg=Math.max(1,Math.floor(int*2*(1+passive("magic")*.08)*weaponMultiplier()*gearMultiplier("magic")*activePower(id)/100));dmg=Math.max(1,Math.floor(dmg*(1-.05*traitLevel("ironwall"))*(1-.1*traitLevel("barrier"))));s.enemyHp=Math.max(0,s.enemyHp-dmg);lines.push(`星雷の魔弾：${dmg} ダメージ`);if(traitLevel("absorb")>0){const bh=Math.ceil(dmg*.02*traitLevel("absorb"));s.enemyHp=Math.min(enemyMax(),s.enemyHp+bh);lines.push(`大ボスの吸収：HP +${bh}`);}if(traitLevel("counter")>0){const rd=Math.max(1,Math.ceil(dmg*.2*traitLevel("counter")));s.hp=Math.max(0,s.hp-rd);lines.push(`大ボスの反撃：${rd} ダメージ`);if(s.hp<=0){finishBattleDefeat(lines);return;}}if(s.enemyHp<=0){finishBattleVictory(lines,s.statAlloc[4]);return;}}activeCooldowns[id]=Date.now()+activeCooldown(id)*1000;s.log=lines.slice(-8).join("\n");render();}
+function doRebirth(){if(s.status==="battle")return;const gain=rebirthGain(s.stage);if(!confirm(`現在の${s.stage}階層で転生します。転生ポイント +${gain}。レベル・階層・ステータス配分・通常スキル・アクティブスキルをリセットします。実行しますか？`))return;stopBattle();if(autoBattleTimer!==null){clearTimeout(autoBattleTimer);autoBattleTimer=null;}s.rebirthPoints+=gain;s.rebirthCount++;s.level=1;s.exp=0;s.stage=1;s.enemyHp=enemyMaxFor(1);s.status="ready";s.defeated=false;s.statAlloc=[0,0,0,0,0];s.statPoints=5;s.skillPoints+=s.learned.reduce((sum,id)=>{const k=skillDefs.find(x=>x.id===id);return sum+(k?skillTotalSpent(k):0)},0)+(activeOwned("magic")?20:0)+(activeOwned("heal")?20:0);s.learned=[];s.skillLevels={};s.activeSkills={magic:false,heal:false};s.activeModes={magic:"auto",heal:"auto"};s.hp=maxHp();s.mp=maxMp();activeCooldowns={magic:0,heal:0};s.log=`転生成功！ 転生ポイント +${gain}。装備・ゴールド・所持品・転生ツリーは引き継いだよ。`;render();}
+function resetGame(){
+ if(!window.confirm("ゲームデータをすべてリセットして、最初から始めますか？\nこの操作は取り消せません。"))return;
+ stopBattle();
+ if(autoBattleTimer!==null){clearTimeout(autoBattleTimer);autoBattleTimer=null;}
+ try{localStorage.removeItem("ruaRpgSave")}catch(e){}
+ s=fresh();
+ generateShopStock();
+ render();
+}
+$("activeSkillList").addEventListener("click",e=>{const learn=e.target.closest("[data-active-learn]");if(learn){const id=learn.dataset.activeLearn;if(!activeOwned(id)&&s.skillPoints>=20){s.skillPoints-=20;s.activeSkills[id]=true;s.log=(id==="magic"?"星雷の魔弾":"星癒の祈り")+"を習得！ 20 SPを使用したよ。";render();}return;}const mode=e.target.closest("[data-active-mode]");if(mode){const id=mode.dataset.activeMode;s.activeModes[id]=(s.activeModes[id]||"auto")==="auto"?"manual":"auto";render();return;}const cast=e.target.closest("[data-active-cast]");if(cast)castActive(cast.dataset.activeCast);});
+$("activeSkillList").addEventListener("change",e=>{if(e.target.matches("[data-heal-threshold]")){s.healThreshold=clamp(Number(e.target.value)||50,10,90);render();}if(e.target.matches("[data-mp-reserve]")){s.mpReserve=Math.max(0,Math.floor(Number(e.target.value)||0));render();}});
+$("rebirthTree").addEventListener("click",e=>{const b=e.target.closest("[data-tree-buy]");if(!b||s.rebirthPoints<1)return;const id=b.dataset.treeBuy;s.rebirthPoints--;s.rebirthTree[id]=treeLevel(id)+1;s.log="転生ツリーを強化したよ！";render();});
+$("rebirthBtn").addEventListener("click",doRebirth);
+$("resetGameBtn").addEventListener("click",resetGame);
+$("battleBtn").addEventListener("click",battle);$("autoBattleToggle").addEventListener("click",()=>{s.autoBattle=!s.autoBattle;if(!s.autoBattle&&autoBattleTimer!==null){clearTimeout(autoBattleTimer);autoBattleTimer=null;}render();if(s.autoBattle&&s.status==="victory")scheduleAutoBattle();});$("restBtn").addEventListener("click",rest);$("nextBtn").addEventListener("click",nextArea);$("potionBtn").addEventListener("click",usePotion);$("resetStats").addEventListener("click",resetStats);$("resetSkills").addEventListener("click",resetSkills);
+$("statList").addEventListener("click",e=>{const plus=e.target.closest("[data-stat-plus]"),minus=e.target.closest("[data-stat-minus]");if(plus){let i=+plus.dataset.statPlus;if(s.statPoints>0){s.statPoints--;s.statAlloc[i]++;render()}}if(minus){let i=+minus.dataset.statMinus;if(s.statAlloc[i]>0){s.statAlloc[i]--;s.statPoints++;render()}}});
+$("applyStats").addEventListener("click",()=>{const inputs=[...document.querySelectorAll("[data-stat-input]")];const amounts=inputs.map(el=>{const v=el.value.trim();return v===""?0:Number(v)});if(amounts.some(v=>!Number.isInteger(v)||v<0)){alert("0以上の整数を入力してね。");return;}const total=amounts.reduce((a,b)=>a+b,0);if(total===0){alert("割り振るポイントを入力してね。");return;}if(total>s.statPoints){alert(`入力合計は${total}ptだよ。未使用ポイント${s.statPoints}pt以内にしてね。`);return;}amounts.forEach((v,i)=>s.statAlloc[i]+=v);s.statPoints-=total;s.hp=clamp(s.hp,1,maxHp());s.mp=clamp(s.mp,0,maxMp());s.log=`ステータスに合計${total}ptを一括で割り振ったよ！`;render();});
+$("skillList").addEventListener("click",e=>{const b=e.target.closest("[data-learn]");if(!b)return;const k=skillDefs.find(x=>x.id===b.dataset.learn);if(!k)return;const info=skillCostInfo(k);if(s.skillPoints<info.cost||k.requires.some(r=>skillLevel(r)<1))return;s.skillPoints-=info.cost;s.skillLevels[k.id]=skillLevel(k.id)+1;s.learned=Object.keys(s.skillLevels).filter(id=>skillLevel(id)>0);s.log=`${k.name}を強化！ Lv.${skillLevel(k.id)}になったよ。${info.cost} SPを使用したよ。`;s.hp=clamp(s.hp,1,maxHp());render()});
+$("skillTabs").addEventListener("click",e=>{const b=e.target.closest("[data-filter]");if(!b)return;document.querySelectorAll("#skillTabs button").forEach(x=>{x.classList.toggle("active",x===b);x.classList.toggle("secondary",x!==b)});render()});
+
+$("shopItems").addEventListener("click",e=>{const b=e.target.closest("[data-buy-gear]");if(b)buyGear(b.dataset.buyGear);});
+$("ownedGear").addEventListener("click",e=>{const b=e.target.closest("[data-equip-gear]");if(b)equipGear(b.dataset.equipGear);});
+$("equippedGear").addEventListener("click",e=>{const b=e.target.closest("[data-unequip]");if(b)unequipGear(b.dataset.unequip,+b.dataset.unequipIndex||0);});
+function showView(view){
+ const shop=view==="shop";$("adventureView").classList.toggle("hidden",shop);$("shopView").classList.toggle("hidden",!shop);
+ $("adventureTab").classList.toggle("active",!shop);$("adventureTab").classList.toggle("secondary",shop);
+ $("shopTab").classList.toggle("active",shop);$("shopTab").classList.toggle("secondary",!shop);
+}
+$("adventureTab").addEventListener("click",()=>showView("adventure"));
+$("shopTab").addEventListener("click",()=>showView("shop"));
+ensureShop();
+ensureBossTraits();
+setInterval(updateShopClock,1000);
+render();
+})();
+</script>
+</body>
+</html>
