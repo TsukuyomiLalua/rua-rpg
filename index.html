@@ -65,14 +65,22 @@ main{max-width:760px;margin:auto;padding:18px 14px 50px}.hero{padding:26px 20px;
 </section>
 
 <section class="panel">
+ <div class="row"><h2>ゲーム設定</h2><span class="tag">セーブ管理</span></div>
+ <p class="muted">最初から遊び直したいときは、ここから全データを初期化できます。</p>
+ <div class="controls"><button class="danger" id="resetGameBtn">最初から始める（全データリセット）</button></div>
+ <p class="small">レベル・経験値・ゴールド・エリア進行・ステータス・スキル・所持品・好感度が初期状態に戻ります。この操作は取り消せません。</p>
+</section>
+
+<section class="panel">
  <h2>所持品・装備</h2><div class="grid"><div class="stat"><small>ポーション</small><strong id="potions">3 個</strong></div><div class="stat"><small>武器</small><strong id="weapon">見習いの杖</strong></div></div>
  <div class="controls" style="margin-top:10px"><button class="secondary" id="potionBtn">♥ ポーションを使う（回復45・戦闘中使用可）</button></div>
 </section>
-<p class="footer">Ver.1.11：防御計算を係数0.75の比率式に調整。敵レベル連動・HP/ATK成長率は仕様検討段階。ゲームデータはこのブラウザ内に自動保存されます。</p>
+<p class="footer">Ver.1.12：全4000エリア対応・全データリセット機能を追加。防御計算は係数0.75の比率式。ゲームデータはこのブラウザ内に自動保存されます。</p>
 </main>
 <script>
 (()=>{
 const $=id=>document.getElementById(id);
+const MAX_STAGE=4000;
 const areas=["星降る森","月影の小径","古代遺跡","深淵への道","星喰らいの祭壇"];
 const enemies=["森のスライム","迷い狼","ダークゴブリン","森の守護獣","星喰らい"];
 // 敵種別ごとの成長倍率：stage 1=通常、2=強敵、3=中ボス、4=エリアボス、5=最終ボス
@@ -93,21 +101,22 @@ const skillDefs=[
 {id:"speed",name:"神速",branch:"技巧",cost:2,desc:"攻撃速度 +8%",effect:"攻撃速度+8%",requires:[]},
 {id:"fortune",name:"幸運体質",branch:"技巧",cost:2,desc:"レアドロップ率 +5%",effect:"ドロップ率+5%",requires:[]}
 ];
-const fresh=()=>({schemaVersion:2,level:1,exp:0,gold:30,hp:100,mp:50,stage:1,enemyHp:30,status:"ready",statAlloc:[0,0,0,0,0],statPoints:5,skillPoints:5,learned:[],potions:3,weapon:"見習いの杖",armorDef:0,passiveDef:0,defenseMultiplier:1,affection:10,log:"森の入口に、小さな魔物が現れた！",defeated:false});
+const fresh=()=>({schemaVersion:3,level:1,exp:0,gold:30,hp:100,mp:50,stage:1,enemyHp:30,status:"ready",statAlloc:[0,0,0,0,0],statPoints:5,skillPoints:5,learned:[],potions:3,weapon:"見習いの杖",armorDef:0,passiveDef:0,defenseMultiplier:1,affection:10,log:"森の入口に、小さな魔物が現れた！",defeated:false});
 let s;
 try{s=JSON.parse(localStorage.getItem("ruaRpgSave"))||fresh()}catch{s=fresh()}
 // 旧セーブデータを新しい階層HP式へ移行。戦闘途中の状態は安全のため待機状態に戻す。
-s.stage=clamp(Number(s.stage)||1,1,5);
+s.stage=clamp(Number(s.stage)||1,1,MAX_STAGE);
 s.statAlloc=Array.isArray(s.statAlloc)?s.statAlloc:[0,0,0,0,0];
 s.learned=Array.isArray(s.learned)?s.learned:[];
 s.armorDef=Number(s.armorDef)||0;s.passiveDef=Number(s.passiveDef)||0;
 s.defenseMultiplier=Number(s.defenseMultiplier)||1;
 if(s.status==="battle")s.status="ready";
-if(s.schemaVersion!==2){s.enemyHp=(s.status==="victory"&&s.defeated)?0:Math.min(enemyMaxFor(s.stage),enemyMaxFor(s.stage));s.schemaVersion=2;}
+if(s.schemaVersion!==3){s.enemyHp=(s.status==="victory"&&s.defeated)?0:enemyMaxFor(s.stage);s.schemaVersion=3;}
 function maxHp(){return Math.floor((100+(s.level-1)*15+s.statAlloc[1]*12)*(1+passive("vital")*.10))}
 function maxMp(){return 50+(s.level-1)*5+s.statAlloc[3]*5}
 function passive(id){return s.learned.includes(id)?1:0}
-function enemyType(stage=s.stage){return enemyTypes[Math.max(0,Math.min(stage-1,enemyTypes.length-1))]}
+function stageIndex(stage=s.stage){return (stage-1)%5}
+function enemyType(stage=s.stage){return enemyTypes[stageIndex(stage)]}
 function enemyBaseHp(stage=s.stage){return Math.ceil(30*Math.pow(1.18,stage-1)+5*(stage-1))}
 function enemyMaxFor(stage=s.stage){return Math.ceil(enemyBaseHp(stage)*enemyType(stage).hp)}
 function enemyMax(){return enemyMaxFor(s.stage)}
@@ -117,7 +126,8 @@ function playerVit(){return 5+(s.statAlloc[1]||0)}
 function finalDefense(){const base=playerVit()+(s.armorDef||0)+(s.passiveDef||0);return Math.max(0,base*(s.defenseMultiplier||1))}
 function incomingDamage(){const atk=enemyAtk();const def=finalDefense();const reduction=def/(def+atk*0.75);const raw=Math.max(1,Math.ceil(atk*(1-reduction)));return Math.max(1,Math.ceil(raw*(1-passive("guard")*.05)))}
 function enemyIsBoss(){return enemyType().sp>0}
-function enemyLabel(){return enemies[Math.min(s.stage-1,enemies.length-1)]}
+function areaLabel(stage=s.stage){return stage<=areas.length?areas[stage-1]:`星界第${stage}層`}
+function enemyLabel(){return enemies[stageIndex()]}
 function save(){localStorage.setItem("ruaRpgSave",JSON.stringify(s))}
 function clamp(v,min,max){return Math.max(min,Math.min(max,v))}
 function render(){
@@ -127,7 +137,7 @@ function render(){
  $("statPoints").textContent=s.statPoints+" pt";$("skillPoints").textContent=s.skillPoints+" SP";
  $("hpBar").style.width=(s.hp/maxHp()*100)+"%";$("mpBar").style.width=(s.mp/maxMp()*100)+"%";$("expBar").style.width=s.exp+"%";
  $("affection").textContent=s.affection;$("potions").textContent=s.potions+" 個";$("weapon").textContent=s.weapon;
- $("areaTitle").textContent="第"+s.stage+"エリア："+areas[Math.min(s.stage-1,areas.length-1)];
+ $("areaTitle").textContent="第"+s.stage+"エリア："+areaLabel();
  $("enemyName").textContent=enemyLabel()+(enemyIsBoss()?"【BOSS】":"");
  const em=enemyMax();$("enemyHpText").textContent=s.enemyHp+" / "+em;$("enemyBar").style.width=(s.enemyHp/em*100)+"%";
  $("enemyAtkText").textContent=enemyAtk();$("defText").textContent=Math.floor(finalDefense());
@@ -135,7 +145,7 @@ function render(){
  $("battleLog").textContent=s.log;
  $("battleBtn").disabled=s.status!=="ready"||s.defeated||s.hp<=0;
  $("restBtn").disabled=s.status==="battle";
- $("nextBtn").disabled=s.status!=="victory"||s.stage>=5;
+ $("nextBtn").disabled=s.status!=="victory"||s.stage>=MAX_STAGE;
  $("potionBtn").disabled=s.potions<=0||s.hp>=maxHp()||s.status==="defeat";
  $("battleHint").textContent=s.status==="victory"?"勝利！休憩しても敵は復活しません。次のエリアへ進もう。":s.status==="defeat"?"休憩すると回復して同じ敵に再挑戦できます。":"オート戦闘は勝敗が決まるまで進行します。勝利した敵とは再戦できません。";
  $("statRemain").textContent=s.statPoints;
@@ -194,14 +204,22 @@ function rest(){
  render();
 }
 function nextArea(){
- if(s.status!=="victory"||s.stage>=5)return;
+ if(s.status!=="victory"||s.stage>=MAX_STAGE)return;
  s.stage++;s.enemyHp=enemyMax();s.defeated=false;s.status="ready";
  s.hp=clamp(s.hp+30,1,maxHp());s.mp=clamp(s.mp+15,0,maxMp());
- s.log=`${areas[s.stage-1]}に到着！ ${enemyLabel()}が現れた！`;render();
+ s.log=`${areaLabel()}に到着！ ${enemyLabel()}が現れた！`;render();
 }
 function usePotion(){if(s.potions<=0||s.hp>=maxHp()||s.status==="defeat")return;s.potions--;const before=s.hp;s.hp=clamp(s.hp+45,0,maxHp());const healed=s.hp-before;s.log=(s.status==="battle"?"戦闘中に":"")+`ポーションを使った！ HPが${healed}回復したよ。敵の行動は進まないよ。`;render()}
 function resetStats(){s.statPoints+=s.statAlloc.reduce((a,b)=>a+b,0);s.statAlloc=[0,0,0,0,0];s.hp=clamp(s.hp,1,maxHp());s.mp=clamp(s.mp,0,maxMp());s.log="ステータスを無料で振り直したよ！";render()}
 function resetSkills(){s.skillPoints+=skillDefs.filter(k=>s.learned.includes(k.id)).reduce((a,k)=>a+k.cost,0);s.learned=[];s.hp=clamp(s.hp,1,maxHp());s.log="パッシブスキルを無料で振り直したよ！";render()}
+function resetGame(){
+ if(!window.confirm("ゲームデータをすべてリセットして、最初から始めますか？\nこの操作は取り消せません。"))return;
+ stopBattle();
+ try{localStorage.removeItem("ruaRpgSave")}catch(e){}
+ s=fresh();
+ render();
+}
+$("resetGameBtn").addEventListener("click",resetGame);
 $("battleBtn").addEventListener("click",battle);$("restBtn").addEventListener("click",rest);$("nextBtn").addEventListener("click",nextArea);$("potionBtn").addEventListener("click",usePotion);$("resetStats").addEventListener("click",resetStats);$("resetSkills").addEventListener("click",resetSkills);
 $("statList").addEventListener("click",e=>{const plus=e.target.closest("[data-stat-plus]"),minus=e.target.closest("[data-stat-minus]");if(plus){let i=+plus.dataset.statPlus;if(s.statPoints>0){s.statPoints--;s.statAlloc[i]++;render()}}if(minus){let i=+minus.dataset.statMinus;if(s.statAlloc[i]>0){s.statAlloc[i]--;s.statPoints++;render()}}});
 $("skillList").addEventListener("click",e=>{const b=e.target.closest("[data-learn]");if(!b)return;const k=skillDefs.find(x=>x.id===b.dataset.learn);if(!k||s.learned.includes(k.id)||s.skillPoints<k.cost||k.requires.some(r=>!s.learned.includes(r)))return;s.skillPoints-=k.cost;s.learned.push(k.id);s.log=`${k.name}を習得！ 効果が戦闘に反映されるよ。`;render()});
