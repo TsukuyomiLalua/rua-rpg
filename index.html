@@ -8,7 +8,7 @@
 <style>
 :root{color-scheme:dark;--bg:#111020;--panel:#201e36;--panel2:#292642;--line:#403b60;--text:#f5f1ff;--muted:#b8b1d2;--gold:#f1c879;--pink:#f29abf;--green:#78d6a1;--blue:#83baff;--red:#ff8585}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#29234a 0,#111020 55%);color:var(--text);font:15px/1.55 system-ui,-apple-system,"Hiragino Kaku Gothic ProN",Meiryo,sans-serif}
-main{max-width:760px;margin:auto;padding:18px 14px 50px}.hero{padding:26px 20px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(135deg,#38305b,#211e39);text-align:center}.eyebrow{color:var(--gold);letter-spacing:.16em;font-size:11px}.hero h1{margin:6px 0;font-size:clamp(25px,6vw,38px)}.hero p{color:var(--muted);margin:6px 0 0}.panel{background:rgba(32,30,54,.96);border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:14px}.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.muted{color:var(--muted);font-size:13px}.tag{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:3px 9px;font-size:11px;color:var(--gold)}h2{font-size:18px;margin:0 0 12px}h3{font-size:15px;margin:0}.bar{height:10px;background:#111020;border-radius:99px;overflow:hidden;margin:5px 0 10px}.fill{height:100%;border-radius:99px;transition:width .2s}.hp{background:linear-gradient(90deg,#42b978,#9be6a9)}.mp{background:linear-gradient(90deg,#397cdb,#8dc6ff)}.exp{background:linear-gradient(90deg,#bd8b37,#ffe09a)}.enemy{background:linear-gradient(90deg,#c54f65,#ff9b9b)}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.stat,.skill{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:11px}.stat strong{font-size:20px}.stat small{display:block;color:var(--muted)}button{border:1px solid #675d91;background:#514477;color:white;border-radius:11px;padding:10px 13px;font-weight:650;font-size:14px;cursor:pointer}button:hover{filter:brightness(1.12)}button:disabled{opacity:.38;cursor:not-allowed}.secondary{background:#302d49;border-color:var(--line)}.good{background:#285d4a;border-color:#438d70}.danger{background:#663746;border-color:#a55a70}.controls{display:flex;gap:8px;flex-wrap:wrap}.controls button{flex:1;min-width:120px}.log{white-space:pre-line;background:#151329;border:1px solid var(--line);border-radius:12px;padding:12px;min-height:72px;color:#e9e2ff;font-size:13px}.skill-list{display:grid;gap:8px}.total-status-wrap{margin:12px 0;padding:12px;border:1px solid var(--gold);border-radius:13px;background:rgba(241,200,121,.045)}.total-status-wrap h3{color:var(--gold)}.total-status-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:9px}.total-stat{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:9px}.total-stat small{display:block;color:var(--muted);font-size:11px}.total-stat b{font-size:16px}.stat-controls{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end}.stat-controls button{min-width:38px;flex:0 0 auto;padding:7px 11px}.stat-input{width:76px;min-width:0;background:#151329;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:8px;text-align:center;font:inherit}.stat-current{min-width:28px;text-align:center;font-weight:700}.skill .row{align-items:flex-start}.skill p{margin:4px 0;color:var(--muted);font-size:12px}.skill button{padding:7px 10px;font-size:12px}.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}.tabs button{padding:7px 10px;font-size:12px}.tabs .active{background:#76619f}.small{font-size:12px;color:var(--muted)}.notice{border-left:3px solid var(--gold);padding:8px 10px;background:#2a2540;border-radius:5px;color:#e9defe;font-size:13px}.skill-meta{color:var(--gold);font-size:12px;margin-top:5px}.rebirth-tree{display:grid;gap:12px;margin-top:14px}.tree-root{text-align:center;padding:12px;border:1px solid var(--gold);border-radius:14px;background:#342d4a;color:var(--gold);font-weight:750}.tree-branches{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.tree-branch{display:grid;gap:10px}.tree-node{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:11px;text-align:center}.tree-node.locked{opacity:.48}.tree-node b{display:block}.tree-node p{font-size:12px;color:var(--muted);margin:5px 0}.tree-node button{width:100%;margin-top:6px}.tree-link{text-align:center;color:var(--gold);font-size:18px;line-height:1}.tree-section{display:grid;gap:9px}.tree-section h3{color:var(--gold);text-align:center}.tree-stat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.major-section{border:1px solid var(--gold);border-radius:14px;padding:12px;background:rgba(241,200,121,.06)}.major-node{border-color:var(--gold);background:linear-gradient(145deg,#39304a,#292642)}@media(max-width:430px){.tree-stat-grid{grid-template-columns:1fr}}@media(max-width:430px){.tree-branches{grid-template-columns:1fr}}.footer{text-align:center;color:var(--muted);font-size:11px;margin:18px 0}.hidden{display:none!important}
+main{max-width:760px;margin:auto;padding:18px 14px 50px}.hero{padding:26px 20px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(135deg,#38305b,#211e39);text-align:center}.eyebrow{color:var(--gold);letter-spacing:.16em;font-size:11px}.hero h1{margin:6px 0;font-size:clamp(25px,6vw,38px)}.hero p{color:var(--muted);margin:6px 0 0}.panel{background:rgba(32,30,54,.96);border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:14px}.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.muted{color:var(--muted);font-size:13px}.tag{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:3px 9px;font-size:11px;color:var(--gold)}h2{font-size:18px;margin:0 0 12px}h3{font-size:15px;margin:0}.bar{height:10px;background:#111020;border-radius:99px;overflow:hidden;margin:5px 0 10px}.fill{height:100%;border-radius:99px;transition:width .2s}.hp{background:linear-gradient(90deg,#42b978,#9be6a9)}.mp{background:linear-gradient(90deg,#397cdb,#8dc6ff)}.exp{background:linear-gradient(90deg,#bd8b37,#ffe09a)}.enemy{background:linear-gradient(90deg,#c54f65,#ff9b9b)}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.stat,.skill{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:11px}.stat strong{font-size:20px}.stat small{display:block;color:var(--muted)}button{border:1px solid #675d91;background:#514477;color:white;border-radius:11px;padding:10px 13px;font-weight:650;font-size:14px;cursor:pointer}button:hover{filter:brightness(1.12)}button:disabled{opacity:.38;cursor:not-allowed}.secondary{background:#302d49;border-color:var(--line)}.good{background:#285d4a;border-color:#438d70}.danger{background:#663746;border-color:#a55a70}.controls{display:flex;gap:8px;flex-wrap:wrap}.controls button{flex:1;min-width:120px}.log{white-space:pre-line;background:#151329;border:1px solid var(--line);border-radius:12px;padding:12px;min-height:72px;color:#e9e2ff;font-size:13px}.skill-list{display:grid;gap:8px}.total-status-wrap{margin:12px 0;padding:12px;border:1px solid var(--gold);border-radius:13px;background:rgba(241,200,121,.045)}.total-status-wrap h3{color:var(--gold)}.total-status-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:9px}.total-stat{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:9px}.total-stat small{display:block;color:var(--muted);font-size:11px}.total-stat b{font-size:16px}.stat-controls{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end}.stat-controls button{min-width:38px;flex:0 0 auto;padding:7px 11px}.stat-input{width:76px;min-width:0;background:#151329;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:8px;text-align:center;font:inherit}.stat-current{min-width:28px;text-align:center;font-weight:700}.skill .row{align-items:flex-start}.skill p{margin:4px 0;color:var(--muted);font-size:12px}.skill button{padding:7px 10px;font-size:12px}.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}.tabs button{padding:7px 10px;font-size:12px}.tabs .active{background:#76619f}.small{font-size:12px;color:var(--muted)}.notice{border-left:3px solid var(--gold);padding:8px 10px;background:#2a2540;border-radius:5px;color:#e9defe;font-size:13px}.skill-meta{color:var(--gold);font-size:12px;margin-top:5px}.rebirth-tree{margin-top:14px}.web-board{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:auto auto auto auto auto;gap:10px;align-items:stretch;padding:14px 4px;border-radius:20px;overflow:hidden;background:radial-gradient(ellipse at center,rgba(241,200,121,.10),transparent 62%),repeating-radial-gradient(circle at 50% 50%,transparent 0 54px,rgba(190,166,235,.13) 55px 56px,transparent 57px 92px)}.web-board:before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-conic-gradient(from 0deg at 50% 50%,transparent 0deg 29deg,rgba(190,166,235,.12) 29.5deg 30deg,transparent 30.5deg 60deg);mask-image:radial-gradient(ellipse,black 25%,transparent 78%)}.tree-node,.tree-core{position:relative;z-index:1;min-width:0;background:rgba(36,33,59,.96);border:1px solid var(--line);border-radius:12px;padding:9px 7px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.2)}.tree-node.locked{opacity:.52}.tree-node b{display:block;font-size:12px}.tree-node p{font-size:10px;color:var(--muted);margin:4px 0}.tree-node button{width:100%;margin-top:5px;padding:6px 4px;font-size:10px}.tree-node .skill-meta{font-size:10px}.tree-core{grid-column:2;grid-row:3;display:flex;flex-direction:column;justify-content:center;align-items:center;border:2px solid var(--gold);border-radius:50%;aspect-ratio:1/1;background:radial-gradient(circle,#51436c,#29243f 72%);color:var(--gold);padding:8px}.tree-core strong{font-size:clamp(17px,4vw,25px);font-variant-numeric:tabular-nums}.tree-core small{font-size:10px;color:#e4d5ad}.tree-core .core-label{font-size:11px;font-weight:800}.web-str{grid-column:2;grid-row:1}.web-int{grid-column:1;grid-row:2}.web-vit{grid-column:3;grid-row:2}.web-magic{grid-column:1;grid-row:3}.web-agi{grid-column:3;grid-row:3}.web-heal{grid-column:1;grid-row:4}.web-luk{grid-column:2;grid-row:5}.web-hp{grid-column:3;grid-row:4}.web-mp{grid-column:3;grid-row:5}.web-eff{grid-column:1;grid-row:5}.web-cool{grid-column:2;grid-row:4}.web-skip{grid-column:2;grid-row:2;border-color:var(--gold);background:linear-gradient(145deg,#39304a,#292642)}.tree-note{position:relative;z-index:1;text-align:center;color:var(--muted);font-size:11px;margin:4px 0 0}@media(max-width:430px){.web-board{gap:6px;padding:8px 0}.tree-node{padding:7px 4px}.tree-node b{font-size:11px}.tree-node p{font-size:9px}.tree-node button{font-size:9px}.tree-core{padding:4px}.tree-core .core-label{font-size:9px}.tree-core strong{font-size:17px}}.footer{text-align:center;color:var(--muted);font-size:11px;margin:18px 0}.hidden{display:none!important}
 @media(min-width:600px){.grid.five{grid-template-columns:repeat(5,minmax(0,1fr))}.grid.stats{grid-template-columns:repeat(3,minmax(0,1fr))}}
 </style>
 </head>
@@ -48,10 +48,9 @@ main{max-width:760px;margin:auto;padding:18px 14px 50px}.hero{padding:26px 20px;
   <button class="good" id="battleBtn">⚔ オート戦闘開始</button>
   <button class="secondary" id="restBtn">⛺ 休憩する</button>
   <button class="secondary" id="nextBtn" disabled>次のエリアへ →</button>
-  <button class="good" id="skipFloorsBtn" disabled>✧ 階層突破</button>
   <button class="secondary" id="potionBtn">♥ ポーションを使う（最大HPの5%回復・戦闘中使用可）</button>
  </div>
- <div class="row" style="margin-top:10px"><div><b>連続オート戦闘</b><div class="small">敵を倒すと次のエリアへ進み、自動で戦闘を開始するよ。</div></div><button class="secondary" id="autoBattleToggle" type="button" aria-pressed="false">OFF</button></div>
+ <div class="row" style="margin-top:10px"><div><b>連続オート戦闘</b><div class="small">敵を倒すと次のエリアへ進み、転生ツリーの階層突破Lvに応じて通常階層の戦闘を自動省略するよ。大ボスは必ず戦うよ。</div></div><button class="secondary" id="autoBattleToggle" type="button" aria-pressed="false">OFF</button></div>
  <p class="small" id="battleHint">敵HP・攻撃力は階層と敵種別から自動計算。防御軽減は DEF ÷ (DEF + 敵ATK × 0.75)。</p>
 </section>
 
@@ -141,6 +140,7 @@ const statDefs=[["STR","攻撃力"],["VIT","最大HP・防御力"],["AGI","攻�
 const skillDefs=[
 {id:"power",name:"剛力",branch:"攻撃",cost:1,desc:"攻撃力 +5%",effect:"攻撃力+5%",requires:[]},
 {id:"critical",name:"急所狙い",branch:"攻撃",cost:2,desc:"クリティカル率 +3%",effect:"会心率+3%",requires:["power"]},
+{id:"critDamage",name:"会心強化",branch:"攻撃",cost:2,desc:"会心ダメージを複利で強化（急所狙い習得後に解放）",effect:"会心ダメージ強化",requires:["critical"]},
 {id:"magic",name:"魔力増幅",branch:"魔法",cost:2,desc:"魔法攻撃力 +8%",effect:"魔法攻撃+8%",requires:[]},
 {id:"vital",name:"生命強化",branch:"防御",cost:1,desc:"最大HP +10%",effect:"最大HP+10%",requires:[]},
 {id:"guard",name:"鉄壁",branch:"防御",cost:2,desc:"被ダメージを逓減式で軽減（80%に漸近）",effect:"被ダメージ軽減（80%に漸近）",requires:["vital"]},
@@ -272,10 +272,13 @@ function updateShopClock(){
  $("shopCountdown").textContent=`${mm}:${ss}`;
  if(remain<=0){generateShopStock();renderShop();save();}
 }
-function maxHp(){return Math.floor((100+(s.level-1)*15+s.statAlloc[1]*12*rebirthMultiplier("vit"))*rebirthMultiplier("hp")*(1+passive("vital")*.10)*gearMultiplier("hp"))}
+function maxHp(){return Math.floor((100+(s.level-1)*15+s.statAlloc[1]*12*rebirthMultiplier("vit"))*rebirthMultiplier("hp")*passiveCompound("vital",.05)*gearMultiplier("hp"))}
 function maxMp(){return Math.floor((50+(s.level-1)*5+s.statAlloc[3]*5*rebirthMultiplier("int"))*rebirthMultiplier("mp"))}
 function skillLevel(id){return Math.max(0,Number(s.skillLevels?.[id])||0)}
 function passive(id){return skillLevel(id)}
+// 複利パッシブ用ソフトキャップ：Lv20までは実効Lvそのまま。以降は追加Lvの伸びを徐々に逓減。
+function passiveEffectiveLevel(id){const lv=passive(id);if(lv<=20)return lv;const extra=lv-20;return 20+(0.7*extra/(1+extra/40));}
+function passiveCompound(id,rate){return Math.pow(1+rate,passiveEffectiveLevel(id));}
 const activeDefs=[{id:"magic",name:"星雷の魔弾",type:"魔法攻撃",ct:2,mp:10},{id:"heal",name:"星癒の祈り",type:"回復",ct:4,mp:20}];
 const bossTraitDefs=[{id:"regen",name:"再生",unlock:50},{id:"ironwall",name:"鉄壁",unlock:50},{id:"accelerate",name:"加速",unlock:50},{id:"barrier",name:"魔力障壁",unlock:50},{id:"unyielding",name:"不屈",unlock:50},{id:"absorb",name:"吸収",unlock:150},{id:"counter",name:"反撃",unlock:150},{id:"starbreak",name:"星砕き",unlock:150}];
 function rebirthGain(stage=s.stage){return Math.max(1,Math.floor(Math.pow(Math.max(1,stage)/100,.8)))}
@@ -298,17 +301,17 @@ function skillCostInfo(k){let cost=k.cost,progress=0;for(let i=0;i<skillLevel(k.
 function skillTotalSpent(k){let cost=k.cost,progress=0,total=0;for(let i=0;i<skillLevel(k.id);i++){total+=cost;progress++;if(progress>=cost){cost++;progress=0;}}return total;}
 function stageIndex(stage=s.stage){return (stage-1)%5}
 function enemyType(stage=s.stage){return enemyTypes[stageIndex(stage)]}
-function enemyBaseHp(stage=s.stage){return Math.ceil(30*Math.pow(1.18,stage-1)+5*(stage-1))}
+function enemyBaseHp(stage=s.stage){const n=Math.max(0,stage-1);return Math.ceil(30+12*n+5.8*n*n)}
 function enemyMaxFor(stage=s.stage){return Math.ceil(enemyBaseHp(stage)*enemyType(stage).hp)}
 function enemyMax(){return enemyMaxFor(s.stage)}
-function enemyBaseAtk(stage=s.stage){return Math.ceil(5*Math.pow(1.09,stage-1)+3*(stage-1))}
+function enemyBaseAtk(stage=s.stage){const n=Math.max(0,stage-1);return Math.ceil(5+1.5*n+0.24*n*n)}
 function enemyAtk(stage=s.stage){return Math.ceil(enemyBaseAtk(stage)*enemyType(stage).atk)}
 function playerVit(){return (5+(s.statAlloc[1]||0))*rebirthMultiplier("vit")}
 function finalDefense(){const base=playerVit()+(s.armorDef||0)+(s.passiveDef||0);return Math.max(0,base*(s.defenseMultiplier||1)*gearMultiplier("defense"))}
 function guardReduction(){return 0.8*(1-Math.pow(0.9375,passive("guard")))}
 function incomingDamage(){let atk=enemyAtk();if(traitLevel("unyielding")>0&&s.enemyHp<=enemyMax()*.3)atk=Math.ceil(atk*(1+.1*traitLevel("unyielding")));const def=finalDefense();const reduction=def/(def+atk*0.75);const raw=Math.max(1,Math.ceil(atk*(1-reduction)));return Math.max(1,Math.ceil(raw*(1-guardReduction())))}
-function attackSpeedMultiplier(){return 1+(s.statAlloc[2]||0)*0.01*rebirthMultiplier("agi")+passive("speed")*0.08}
-function battleInterval(){return Math.max(200,Math.round(700/attackSpeedMultiplier()))}
+function attackSpeedMultiplier(){return (1+(s.statAlloc[2]||0)*0.01*rebirthMultiplier("agi"))*passiveCompound("speed",.03)}
+function battleInterval(){return Math.max(passive("speed")>=20?100:200,Math.round(700/attackSpeedMultiplier()))}
 function potionHealAmount(){return Math.max(1,Math.ceil(maxHp()*0.05))}
 function enemyIsBoss(){return enemyType().sp>0}
 function areaLabel(stage=s.stage){return stage<=areas.length?areas[stage-1]:`星界第${stage}層`}
@@ -319,8 +322,8 @@ function clamp(v,min,max){return Math.max(min,Math.min(max,v))}
 if(s.status==="defeat"){const lostStage=s.stage;s.stage=Math.max(1,s.stage-1);s.enemyHp=enemyMaxFor(s.stage);s.defeated=false;s.status="ready";s.hp=maxHp();s.mp=maxMp();s.log=lostStage===1?"敗北状態から復帰！最初の敵に再挑戦できるよ。":"敗北状態から復帰！直前に倒した敵に戻ったよ。";}
 function totalCombatStats(){
  const str=s.statAlloc[0]||0,agi=s.statAlloc[2]||0,int=s.statAlloc[3]||0,luk=s.statAlloc[4]||0;
- const attack=Math.floor((18+(s.level+1)*2+str*4*rebirthMultiplier("str")+(s.weapon==="星詠みの杖"?8:0))*gearMultiplier("attack")*weaponMultiplier()*(1+passive("power")*.05));
- const magic=Math.floor(int*2*rebirthMultiplier("int")*(1+passive("magic")*.08)*weaponMultiplier()*gearMultiplier("magic"));
+ const attack=Math.floor((18+(s.level+1)*2+str*4*rebirthMultiplier("str")+(s.weapon==="星詠みの杖"?8:0))*gearMultiplier("attack")*weaponMultiplier()*passiveCompound("power",.03));
+ const magic=Math.floor(int*2*rebirthMultiplier("int")*passiveCompound("magic",.04)*weaponMultiplier()*gearMultiplier("magic"));
  const crit=Math.min(.5,.05+luk*.01*rebirthMultiplier("luk")+passive("critical")*.03);
  const dodge=Math.min(.3,agi*.01*rebirthMultiplier("agi")+passive("speed")*.08);
  const drop=Math.min(.95,(.25+luk*.03*rebirthMultiplier("luk")+passive("fortune")*.05)*gearMultiplier("drop"));
@@ -339,7 +342,7 @@ function totalCombatStats(){
   ["攻撃間隔",battleInterval()+" ms"],
   ["回避率",formatPct(dodge)],
   ["会心率",formatPct(crit)],
-  ["会心ダメージ","150%"],
+  ["会心ダメージ",formatPct(1.5*passiveCompound("critDamage",.05))],
   ["回復スキル威力",heal+"%（最大HP基準）"],
   ["ドロップ率",formatPct(drop)]
  ];
@@ -361,9 +364,8 @@ function render(){
  $("autoBattleToggle").textContent=s.autoBattle?"ON":"OFF";$("autoBattleToggle").classList.toggle("good",s.autoBattle);$("autoBattleToggle").classList.toggle("secondary",!s.autoBattle);$("autoBattleToggle").setAttribute("aria-pressed",String(s.autoBattle));
  $("restBtn").disabled=s.status==="battle";
  $("nextBtn").disabled=s.status!=="victory"||s.stage>=MAX_STAGE;
- const skipBtn=$("skipFloorsBtn");if(skipBtn){const skipLv=treeLevel("skip");skipBtn.disabled=skipLv<1||s.status!=="ready"||isMajorBoss()||s.stage>=MAX_STAGE;skipBtn.textContent=skipLv>0?`✧ ${skipFloorCount()}階層突破（戦闘省略）`:"✧ 階層突破（転生ツリーで解放）";}
  $("potionBtn").disabled=s.potions<=0||s.hp>=maxHp()||s.status==="defeat";$("potionBtn").textContent=`♥ ポーションを使う（${potionHealAmount()}回復・最大HPの5%）`;
- $("battleHint").textContent=s.status==="victory"?"勝利！次のエリアへ進もう。":s.status==="defeat"?"直前に倒した敵へ戻ったよ。全回復して再挑戦できるよ。":`AGI・神速で攻撃間隔が短縮（現在${battleInterval()}ms）。戦闘中もポーションを使えるよ。`;
+ $("battleHint").textContent=s.status==="victory"?"勝利！次のエリアへ進もう。":s.status==="defeat"?"直前に倒した敵へ戻ったよ。全回復して再挑戦できるよ。":`AGI・神速で攻撃間隔が短縮（現在${battleInterval()}ms／下限${passive("speed")>=20?100:200}ms）。戦闘中もポーションを使えるよ。`;
  $("statRemain").textContent=s.statPoints;
  $("totalStatus").innerHTML=totalCombatStats().map(([name,value])=>`<div class="total-stat"><small>${name}</small><b>${value}</b></div>`).join("");
  $("statList").innerHTML=statDefs.map(([name,desc],i)=>`<div class="skill"><div class="row"><div><b>${name}</b><p>${desc}</p><span class="small">現在：<b>${s.statAlloc[i]}</b></span></div><div class="stat-controls"><button class="secondary" data-stat-minus="${i}" ${s.statAlloc[i]===0?"disabled":""}>−</button><span class="stat-current">${s.statAlloc[i]}</span><button data-stat-plus="${i}" ${s.statPoints===0?"disabled":""}>＋</button><input class="stat-input" type="number" inputmode="numeric" min="0" max="${s.statPoints}" step="1" value="0" data-stat-input="${i}" aria-label="${name}に追加するポイント" /></div></div></div>`).join("");
@@ -371,8 +373,8 @@ function render(){
  const filter=document.querySelector("#skillTabs .active")?.dataset.filter||"すべて";
  $("skillList").innerHTML=skillDefs.filter(k=>filter==="すべて"||k.branch===filter).map(k=>{
  const lv=skillLevel(k.id),costInfo=skillCostInfo(k),blocked=k.requires.some(r=>skillLevel(r)<1);
- const totalEffect=({power:`攻撃力 +${lv*5}%`,critical:`会心率 +${lv*3}%`,magic:`魔法攻撃力 +${lv*8}%`,vital:`最大HP +${lv*10}%`,guard:`被ダメージ軽減 ${formatPct(.8*(1-Math.pow(.9375,lv)))}`,speed:`攻撃速度 +${lv*8}%`,fortune:`ドロップ率 +${lv*5}%`})[k.id]||k.desc;
- return `<div class="skill"><div class="row"><div><b>${k.name} <span class="tag">${k.branch}</span></b><p>${k.desc}（1Lvごと）</p><p class="skill-meta">現在の効果：${totalEffect}</p><p>現在Lv. ${lv} · 次回 ${costInfo.cost} SP · このコストで ${costInfo.progress}/${costInfo.cost} 回購入済み</p>${k.requires.length?`<p>前提：${k.requires.map(r=>skillDefs.find(x=>x.id===r).name).join("・")}</p>`:""}</div><button data-learn="${k.id}" ${s.skillPoints<costInfo.cost||blocked?"disabled":""}>${lv>0?"強化":"習得"}（${costInfo.cost} SP）</button></div></div>`;
+ const totalEffect=({power:`攻撃力 ×${passiveCompound("power",.03).toFixed(3)}（実効Lv ${passiveEffectiveLevel("power").toFixed(1)}）`,critical:`会心率 +${lv*3}%`,critDamage:`会心ダメージ ×${passiveCompound("critDamage",.05).toFixed(3)}（基礎150%）`,magic:`魔法攻撃力 ×${passiveCompound("magic",.04).toFixed(3)}（実効Lv ${passiveEffectiveLevel("magic").toFixed(1)}）`,vital:`最大HP ×${passiveCompound("vital",.05).toFixed(3)}（実効Lv ${passiveEffectiveLevel("vital").toFixed(1)}）`,guard:`被ダメージ軽減 ${formatPct(.8*(1-Math.pow(.9375,lv)))}`,speed:`攻撃速度 ×${passiveCompound("speed",.03).toFixed(3)}（実効Lv ${passiveEffectiveLevel("speed").toFixed(1)}）${lv>=20?" · 攻撃間隔下限100ms":" · 下限200ms"}`,fortune:`ドロップ率 +${lv*5}%`})[k.id]||k.desc;
+ return `<div class="skill"><div class="row"><div><b>${k.name} <span class="tag">${k.branch}</span></b><p>${k.desc}${["power","magic","vital","speed","critDamage"].includes(k.id)?" · 複利成長／Lv20以降ソフトキャップ":"（1Lvごと）"}</p><p class="skill-meta">現在の効果：${totalEffect}</p><p>現在Lv. ${lv} · 次回 ${costInfo.cost} SP · このコストで ${costInfo.progress}/${costInfo.cost} 回購入済み</p>${k.requires.length?`<p>前提：${k.requires.map(r=>skillDefs.find(x=>x.id===r).name).join("・")}</p>`:""}</div><button data-learn="${k.id}" ${s.skillPoints<costInfo.cost||blocked?"disabled":""}>${lv>0?"強化":"習得"}（${costInfo.cost} SP）</button></div></div>`;
  }).join("");
  $("activeSpRemain").textContent=s.skillPoints;
  $("activeSkillList").innerHTML=activeDefs.map(k=>{const owned=activeOwned(k.id),mode=s.activeModes[k.id]||"auto";let extra="";if(owned){extra='<p>発動方式：'+(mode==="auto"?"自動":"手動")+'</p>';extra+=k.id==="heal"?'<label class="small">自動回復条件（HP%以下） <input type="number" min="10" max="90" step="5" value="'+s.healThreshold+'" data-heal-threshold></label>':'<label class="small">MP温存量 <input type="number" min="0" max="'+maxMp()+'" step="1" value="'+s.mpReserve+'" data-mp-reserve></label>';}
@@ -381,8 +383,21 @@ function render(){
  const rebirthUnlocked=s.stage>=100;$("rebirthRequirement").textContent=rebirthUnlocked?"転生が解放されています！":"転生解放まであと"+(100-s.stage)+"階層";
  $("rebirthBtn").disabled=!rebirthUnlocked||s.status==="battle";$("rebirthBtn").textContent=rebirthUnlocked?"現在階層で転生する":"第100階層到達で転生解放";
  const node=(id,name,desc,requires=[],maxLevel=Infinity)=>{const lv=treeLevel(id),ok=requires.every(x=>treeLevel(x)>0),cost=treeUpgradeCost(id),can=s.rebirthPoints>=cost&&ok&&lv<maxLevel;const effect=id.startsWith("stat_")?`累計倍率 ×${rebirthMultiplier(id.slice(5)).toFixed(4)}`:"";return `<div class="tree-node ${ok?"":"locked"} ${id==="skip"?"major-node":""}"><b>${name}</b><p>${desc}</p><p class="skill-meta">現在 Lv.${lv}${effect?` · ${effect}`:""}</p>${ok?`<button data-tree-buy="${id}" ${can?"":"disabled"}>強化（${cost} TP）</button>`:`<p>前提ノードを解放してね</p>`}${lv>=maxLevel?"<p class=\"small\">最大レベル</p>":""}</div>`};
- const statNodes=[node("stat_str","STR：剛力","STR由来の攻撃力 ×1.02 / Lv"),node("stat_vit","VIT：生命","VIT由来のHP・防御力 ×1.02 / Lv"),node("stat_agi","AGI：神速","AGI由来の攻撃速度・回避 ×1.02 / Lv"),node("stat_int","INT：魔力","INT由来の魔法攻撃・MP ×1.02 / Lv"),node("stat_luk","LUK：幸運","LUK由来の会心・ドロップ ×1.02 / Lv"),node("stat_hp","生命容量","最大HP ×1.02 / Lv"),node("stat_mp","魔力容量","最大MP ×1.02 / Lv")].join("");
- $("rebirthTree").innerHTML='<div class="tree-root">✧ 転生の核 ✧<br><span class="small">転生ポイントを使って成長</span></div><div class="tree-link">↓</div><section class="tree-section"><h3>基礎ステータス・複利強化</h3><div class="tree-stat-grid">'+statNodes+'</div></section><div class="tree-link">↓</div><div class="tree-branches"><div class="tree-branch">'+node('magic','魔導の枝','星雷の魔弾 +10% / Lv')+'<div class="tree-link">↓</div>'+node('efficiency','魔力循環','アクティブMP消費 -5% / Lv',['magic'])+'</div><div class="tree-branch">'+node('heal','生命の枝','星癒の祈り +1% / Lv')+'<div class="tree-link">↓</div>'+node('cooldown','神速詠唱','クールタイム -5% / Lv',['heal'])+'</div></div><div class="tree-link">↓</div><section class="tree-section major-section"><h3>大型ノード</h3><div class="tree-stat-grid">'+node('skip','階層突破','通常階層・通常ボスの戦闘を省略。特殊ボス階層では停止する',[],5)+'</div><p class="small">Lv.1：3階層 · Lv.2：5階層 · Lv.3：10階層 · Lv.4：15階層 · Lv.5：20階層</p></section>';
+ const treeNodes={
+  str:node("stat_str","STR：剛力","STR由来の攻撃力 ×1.02 / Lv"),
+  vit:node("stat_vit","VIT：生命","VIT由来のHP・防御力 ×1.02 / Lv"),
+  agi:node("stat_agi","AGI：神速","AGI由来の攻撃速度・回避 ×1.02 / Lv"),
+  int:node("stat_int","INT：魔力","INT由来の魔法攻撃・MP ×1.02 / Lv"),
+  luk:node("stat_luk","LUK：幸運","LUK由来の会心・ドロップ ×1.02 / Lv"),
+  hp:node("stat_hp","生命容量","最大HP ×1.02 / Lv"),
+  mp:node("stat_mp","魔力容量","最大MP ×1.02 / Lv"),
+  magic:node('magic','魔導の枝','星雷の魔弾 +10% / Lv'),
+  efficiency:node('efficiency','魔力循環','アクティブMP消費 -5% / Lv',['magic']),
+  heal:node('heal','生命の枝','星癒の祈り +1% / Lv'),
+  cooldown:node('cooldown','神速詠唱','クールタイム -5% / Lv',['heal']),
+  skip:node('skip','階層突破','通常階層・通常ボスの戦闘を省略。特殊ボス階層では停止する',[],5)
+ };
+ $("rebirthTree").innerHTML='<div class="web-board"><div class="web-str">'+treeNodes.str+'</div><div class="web-int">'+treeNodes.int+'</div><div class="web-vit">'+treeNodes.vit+'</div><div class="web-magic">'+treeNodes.magic+'</div><div class="tree-core"><span class="core-label">✧ 転生の核 ✧</span><strong>'+s.rebirthPoints.toLocaleString()+'</strong><small>TP AVAILABLE</small></div><div class="web-agi">'+treeNodes.agi+'</div><div class="web-heal">'+treeNodes.heal+'</div><div class="web-cool">'+treeNodes.cooldown+'</div><div class="web-hp">'+treeNodes.hp+'</div><div class="web-eff">'+treeNodes.efficiency+'</div><div class="web-luk">'+treeNodes.luk+'</div><div class="web-mp">'+treeNodes.mp+'</div><div class="web-skip">'+treeNodes.skip+'<p class="small">Lv.1：3階層 · Lv.2：5階層 · Lv.3：10階層 · Lv.4：15階層 · Lv.5：20階層</p></div></div><p class="tree-note">中央の核から枝が広がる転生ツリー。ノードを強化して外側の成長へ進もう。</p>';
 
  renderShop();renderGear();
  save();
@@ -403,7 +418,7 @@ function stopBattle(){
 function scheduleAutoBattle(){
  if(autoBattleTimer!==null){clearTimeout(autoBattleTimer);autoBattleTimer=null;}
  if(!s.autoBattle||s.status!=="victory"||s.stage>=MAX_STAGE)return;
- autoBattleTimer=setTimeout(()=>{autoBattleTimer=null;if(!s.autoBattle||s.status!=="victory"||s.stage>=MAX_STAGE)return;nextArea();battle();},700);
+ autoBattleTimer=setTimeout(()=>{autoBattleTimer=null;if(!s.autoBattle||s.status!=="victory"||s.stage>=MAX_STAGE)return;nextArea();const beforeSkip=s.stage;const skipped=treeLevel("skip")>0?skipFloors():0;const notice=skipped>0?`オート階層突破！ ${skipped}階層分の戦闘を省略したよ。\n`:"";battle(notice);},700);
 }
 function finishBattleVictory(lines,luk){
  stopBattle();s.status="victory";s.defeated=true;
@@ -430,11 +445,11 @@ function playerAttackTurn(){
  const str=s.statAlloc[0],int=s.statAlloc[3],luk=s.statAlloc[4];
  let lines=s.log?s.log.split("\n"):[];const now=Date.now();
  if(activeOwned("heal")&&(s.activeModes.heal||"auto")==="auto"&&s.hp<=maxHp()*s.healThreshold/100&&now>=activeCooldowns.heal&&s.mp>=activeMpCost("heal")){const before=s.hp;s.mp-=activeMpCost("heal");s.hp=Math.min(maxHp(),s.hp+Math.ceil(maxHp()*activePower("heal")/100));activeCooldowns.heal=now+activeCooldown("heal")*1000;lines.push(`星癒の祈り：HP +${s.hp-before}`);}
- if(activeOwned("magic")&&(s.activeModes.magic||"auto")==="auto"&&now>=activeCooldowns.magic&&s.mp>=activeMpCost("magic")+s.mpReserve){s.mp-=activeMpCost("magic");let md=Math.max(1,Math.floor(int*2*rebirthMultiplier("int")*(1+passive("magic")*.08)*weaponMultiplier()*gearMultiplier("magic")*activePower("magic")/100));md=Math.max(1,Math.floor(md*(1-.05*traitLevel("ironwall"))*(1-.1*traitLevel("barrier"))));s.enemyHp=Math.max(0,s.enemyHp-md);activeCooldowns.magic=now+activeCooldown("magic")*1000;lines.push(`星雷の魔弾：${md} ダメージ`);if(traitLevel("absorb")>0){const bh=Math.ceil(md*.02*traitLevel("absorb"));s.enemyHp=Math.min(enemyMax(),s.enemyHp+bh);lines.push(`大ボスの吸収：HP +${bh}`);}if(traitLevel("counter")>0){const rd=Math.max(1,Math.ceil(md*.2*traitLevel("counter")));s.hp=Math.max(0,s.hp-rd);lines.push(`大ボスの反撃：${rd} ダメージ`);if(s.hp<=0){finishBattleDefeat(lines);return;}}if(s.enemyHp<=0){finishBattleVictory(lines,luk);return;}}
+ if(activeOwned("magic")&&(s.activeModes.magic||"auto")==="auto"&&now>=activeCooldowns.magic&&s.mp>=activeMpCost("magic")+s.mpReserve){s.mp-=activeMpCost("magic");let md=Math.max(1,Math.floor(int*2*rebirthMultiplier("int")*passiveCompound("magic",.04)*weaponMultiplier()*gearMultiplier("magic")*activePower("magic")/100));md=Math.max(1,Math.floor(md*(1-.05*traitLevel("ironwall"))*(1-.1*traitLevel("barrier"))));s.enemyHp=Math.max(0,s.enemyHp-md);activeCooldowns.magic=now+activeCooldown("magic")*1000;lines.push(`星雷の魔弾：${md} ダメージ`);if(traitLevel("absorb")>0){const bh=Math.ceil(md*.02*traitLevel("absorb"));s.enemyHp=Math.min(enemyMax(),s.enemyHp+bh);lines.push(`大ボスの吸収：HP +${bh}`);}if(traitLevel("counter")>0){const rd=Math.max(1,Math.ceil(md*.2*traitLevel("counter")));s.hp=Math.max(0,s.hp-rd);lines.push(`大ボスの反撃：${rd} ダメージ`);if(s.hp<=0){finishBattleDefeat(lines);return;}}if(s.enemyHp<=0){finishBattleVictory(lines,luk);return;}}
 
- const attack=Math.floor((18+(s.level+1)*2+str*4*rebirthMultiplier("str")+(s.weapon==="星詠みの杖"?8:0))*gearMultiplier("attack")*weaponMultiplier()*(1+passive("power")*.05));
+ const attack=Math.floor((18+(s.level+1)*2+str*4*rebirthMultiplier("str")+(s.weapon==="星詠みの杖"?8:0))*gearMultiplier("attack")*weaponMultiplier()*passiveCompound("power",.03));
  const critChance=Math.min(.5,.05+luk*.01*rebirthMultiplier("luk")+passive("critical")*.03);
- const crit=Math.random()<critChance;const magicAttack=Math.floor(int*2*rebirthMultiplier("int")*(1+passive("magic")*.08)*weaponMultiplier()*gearMultiplier("magic"));const dmg=attack+magicAttack+(crit?Math.floor(attack*.5):0);
+ const crit=Math.random()<critChance;const magicAttack=Math.floor(int*2*rebirthMultiplier("int")*passiveCompound("magic",.04)*weaponMultiplier()*gearMultiplier("magic"));const critMultiplier=1.5*passiveCompound("critDamage",.05);const dmg=attack+magicAttack+(crit?Math.floor(attack*(critMultiplier-1)):0);
  const finalDmg=Math.max(1,Math.floor(dmg*(1-.05*traitLevel("ironwall"))*(1-.1*traitLevel("barrier"))));s.enemyHp=Math.max(0,s.enemyHp-finalDmg);lines.push(`${battleRound}T：${crit?"会心！ ":""}ラルアの攻撃 ${finalDmg} ダメージ`);if(traitLevel("absorb")>0){const bossHeal=Math.ceil(finalDmg*.02*traitLevel("absorb"));s.enemyHp=Math.min(enemyMax(),s.enemyHp+bossHeal);lines.push(`大ボスの吸収：HP +${bossHeal}`);}if(traitLevel("counter")>0){const reflected=Math.max(1,Math.ceil(finalDmg*.2*traitLevel("counter")));s.hp=Math.max(0,s.hp-reflected);lines.push(`大ボスの反撃：${reflected} ダメージ`);if(s.hp<=0){finishBattleDefeat(lines);return;}}
  if(s.enemyHp<=0){finishBattleVictory(lines,luk);return;}
  s.log=lines.slice(-8).join("\n");render();
@@ -450,9 +465,9 @@ function enemyAttackTurn(){
  if(s.hp<=0){finishBattleDefeat(lines);return;}
  render();
 }
-function battle(){
+function battle(autoNotice=""){
  if(s.status!=="ready"||s.defeated||s.enemyHp<=0||s.hp<=0)return;
- s.status="battle";battleRound=0;activeCooldowns={magic:0,heal:0};ensureBossTraits();const traitText=isMajorBoss()?"\n大ボス特殊能力："+bossTraitSummary():"";s.log=`戦闘開始！ 攻撃間隔${battleInterval()}ms。敵の反撃間隔は700ms。${traitText}`;render();
+ s.status="battle";battleRound=0;activeCooldowns={magic:0,heal:0};ensureBossTraits();const traitText=isMajorBoss()?"\n大ボス特殊能力："+bossTraitSummary():"";s.log=`${autoNotice}戦闘開始！ 攻撃間隔${battleInterval()}ms。敵の反撃間隔は700ms。${traitText}`;render();
  playerBattleTimer=setInterval(playerAttackTurn,battleInterval());
  const enemyInterval=isMajorBoss()?Math.max(300,700-traitLevel("accelerate")*50):700;enemyBattleTimer=setInterval(enemyAttackTurn,enemyInterval);
 }
@@ -481,9 +496,9 @@ function skipFloors(){
   s.hp=clamp(s.hp+30,1,maxHp());s.mp=clamp(s.mp+15,0,maxMp());
   cleared++;stage++;
  }
- if(cleared===0)return;
+ if(cleared===0)return 0;
  addExp(totalExp);s.gold+=totalGold;s.stage=Math.min(stage,MAX_STAGE);s.enemyHp=enemyMaxFor(s.stage);s.defeated=false;s.status="ready";ensureBossTraits();
- s.log=`階層突破！ ${cleared}階層分の戦闘を省略して第${s.stage}階層へ到達！ EXP +${totalExp} / G +${totalGold}${bonusSp?` / 初回ボスSP +${bonusSp}`:""}${isMajorBoss()?"\n特殊ボスが待ち受けているよ！":""}`;render();
+ s.log=`階層突破！ ${cleared}階層分の戦闘を省略して第${s.stage}階層へ到達！ EXP +${totalExp} / G +${totalGold}${bonusSp?` / 初回ボスSP +${bonusSp}`:""}${isMajorBoss()?"\n特殊ボスが待ち受けているよ！":""}`;render();return cleared;
 }
 function usePotion(){if(s.potions<=0||s.hp>=maxHp()||s.status==="defeat")return;s.potions--;const before=s.hp;s.hp=clamp(s.hp+potionHealAmount(),0,maxHp());const healed=s.hp-before;s.log=(s.status==="battle"?"戦闘中に":"")+`ポーションを使った！ HPが${healed}回復したよ。敵の行動は進まないよ。`;render()}
 function resetStats(){s.statPoints+=s.statAlloc.reduce((a,b)=>a+b,0);s.statAlloc=[0,0,0,0,0];s.hp=clamp(s.hp,1,maxHp());s.mp=clamp(s.mp,0,maxMp());s.log="ステータスを無料で振り直したよ！";render()}
@@ -503,7 +518,7 @@ $("activeSkillList").addEventListener("click",e=>{const learn=e.target.closest("
 $("activeSkillList").addEventListener("change",e=>{if(e.target.matches("[data-heal-threshold]")){s.healThreshold=clamp(Number(e.target.value)||50,10,90);render();}if(e.target.matches("[data-mp-reserve]")){s.mpReserve=Math.max(0,Math.floor(Number(e.target.value)||0));render();}});
 $("rebirthTree").addEventListener("click",e=>{const b=e.target.closest("[data-tree-buy]");if(!b)return;const id=b.dataset.treeBuy,lv=treeLevel(id),cost=treeUpgradeCost(id);if(s.rebirthPoints<cost||(id==="skip"&&lv>=5))return;s.rebirthPoints-=cost;s.rebirthTree[id]=lv+1;s.log=`転生ツリー「${id==="skip"?"階層突破":id.startsWith("stat_")?({str:"STR：剛力",vit:"VIT：生命",agi:"AGI：神速",int:"INT：魔力",luk:"LUK：幸運",hp:"生命容量",mp:"魔力容量"}[id.slice(5)]):id}」をLv.${lv+1}に強化！`;s.hp=clamp(s.hp,1,maxHp());s.mp=clamp(s.mp,0,maxMp());render();});
 $("rebirthBtn").addEventListener("click",doRebirth);
-$("skipFloorsBtn").addEventListener("click",skipFloors);
+
 $("resetGameBtn").addEventListener("click",resetGame);
 $("battleBtn").addEventListener("click",battle);$("autoBattleToggle").addEventListener("click",()=>{s.autoBattle=!s.autoBattle;if(!s.autoBattle&&autoBattleTimer!==null){clearTimeout(autoBattleTimer);autoBattleTimer=null;}render();if(s.autoBattle&&s.status==="victory")scheduleAutoBattle();});$("restBtn").addEventListener("click",rest);$("nextBtn").addEventListener("click",nextArea);$("potionBtn").addEventListener("click",usePotion);$("resetStats").addEventListener("click",resetStats);$("resetSkills").addEventListener("click",resetSkills);
 $("statList").addEventListener("click",e=>{const plus=e.target.closest("[data-stat-plus]"),minus=e.target.closest("[data-stat-minus]");if(plus){let i=+plus.dataset.statPlus;if(s.statPoints>0){s.statPoints--;s.statAlloc[i]++;render()}}if(minus){let i=+minus.dataset.statMinus;if(s.statAlloc[i]>0){s.statAlloc[i]--;s.statPoints++;render()}}});
